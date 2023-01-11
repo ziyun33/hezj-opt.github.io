@@ -40,9 +40,9 @@
 <p>为了动态调整learning rate，我们可以采取两点</p>
 <ul>
 <li><p>对每个参数动态调整learning rate</p>
-<p>$\theta_i^{t+1}&#x3D;\theta_i^t-\eta g_i^t\rightarrow\theta_i^{t+1}&#x3D;\theta_i^t-\frac{\eta}{\sigma_i^t}g_i^t$</p>
+<p>$\theta_i^{t+1}&#x3D;\theta_i^t-\eta g_i^t\rightarrow\theta_i^{t+1}&#x3D;\theta_i^t-\frac{\eta}{\sigma_i^t}g_i^t$  </p>
 <p>t代表随着训练轮次而改变，i代表对不同的参数</p>
-<p>常见的求$\sigma_i^t$的方法有Root mean square（$\sigma_t^i&#x3D;\sqrt{\frac{1}{t+1}\sum_0^t (g_i^t)^2}$）和RMSProp（$\sigma_{i}^{t}&#x3D;\sqrt{\alpha\left(\sigma_{i}^{t-1}\right)^{2}+(1-\alpha)\left(g_{i}^{t}\right)^{2}}$，比较近的轮次的梯度影响比较大）</p>
+<p>常见的求$\sigma_i^t$的方法有Root mean square（$\sigma_t^i&#x3D;\sqrt{\frac{1}{t+1}\sum_0^t (g_i^t)^2}$  ）和RMSProp（$\sigma_{i}^{t}&#x3D;\sqrt{\alpha\left(\sigma_{i}^{t-1}\right)^{2}+(1-\alpha)\left(g_{i}^{t}\right)^{2}}$  ，比较近的轮次的梯度影响比较大）</p>
 </li>
 <li><p>对所有参数进行learning decay</p>
 <p>上式中$\eta\rightarrow\eta_t$</p>
