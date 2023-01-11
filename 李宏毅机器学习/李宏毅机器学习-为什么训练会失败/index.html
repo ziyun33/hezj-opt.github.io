@@ -4,38 +4,38 @@
 
 
 
-通过求loss function的Hessian矩阵，"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-为什么训练会失败</a></h3></div><div class="post-content"><p><img src="/1664787777114-1c1f9ee6-d6e7-4af1-aa5e-8772c92a48ce.png" alt="27898416645942142.png" style="zoom: 67%;" />
+通过求loss function的Hessian矩阵，"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-为什么训练会失败</a></h3></div><div class="post-content"><p><img src="1664787777114-1c1f9ee6-d6e7-4af1-aa5e-8772c92a48ce.png" alt="27898416645942142.png" style="zoom: 67%;" />
 
 <h1 id="Training-loss很高"><a href="#Training-loss很高" class="headerlink" title="Training loss很高"></a>Training loss很高</h1><h2 id="这时发生了什么"><a href="#这时发生了什么" class="headerlink" title="这时发生了什么"></a>这时发生了什么</h2><p>当微分接近0时，训练会停止。但是此时不一定是在极值点，也可能是在<strong>鞍点（saddle point）</strong>。</p>
 <blockquote>
 <p>其实训练停止时，微分也不一定很接近0，也就不一定是在saddle point，这个后面会提到</p>
 </blockquote>
-<img src="/1.png" alt="1" style="zoom: 30%;" />
+<img src="1.png" alt="1" style="zoom: 30%;" />
 
 <p>通过求loss function的Hessian矩阵，判断Hessian矩阵<strong>正定性</strong>可以判断当前是否处在saddle point——H不定时则处在saddle point。</p>
-<img src="/2.png" alt="2" style="zoom: 30%;" />
+<img src="2.png" alt="2" style="zoom: 30%;" />
 
 <p>对于神经网络的loss而言，Hessian矩阵是一个维度非常高的矩阵，所以Hessian矩阵正定或负定的可能性很低，所以大部分训练停止的情况其实都是遇到了saddle point。</p>
 <h2 id="训练方法"><a href="#训练方法" class="headerlink" title="训练方法"></a>训练方法</h2><h3 id="Batch"><a href="#Batch" class="headerlink" title="Batch"></a>Batch</h3><p>每一个epoch开始时，会随机分割batch，训练时每次依次用各个batch计算出梯度后更新参数。</p>
-<img src="/4.png" alt="4" style="zoom:33%;" />
+<img src="4.png" alt="4" style="zoom:33%;" />
 
 <h4 id="Batch对训练效率影响"><a href="#Batch对训练效率影响" class="headerlink" title="Batch对训练效率影响"></a>Batch对训练效率影响</h4><p>一个很直观的想法是batch越大，训练时在一个batch上花的时间越久，但是由于GPU有并行运算的能力，其实batch在不是特别大的时候训练时间和batch size&#x3D;1时相比几乎没有增长。所以适当的增大batch可以提高训练效率。</p>
-<img src="/5.png" alt="5" style="zoom: 40%;" />
+<img src="5.png" alt="5" style="zoom: 40%;" />
 
 <h4 id="Batch对训练效果影响"><a href="#Batch对训练效果影响" class="headerlink" title="Batch对训练效果影响"></a>Batch对训练效果影响</h4><p>从下图可以看出，<strong>小batch的训练准确率比较高</strong>。</p>
-<img src="/6.png" alt="6" style="zoom:40%;" />
+<img src="6.png" alt="6" style="zoom:40%;" />
 
 <p>为什么小的batch训练准确率高呢？原因在于使用小的batch时，每个batch之间的loss function可能存在细微的差别，当一个batch训练时卡在saddle point，对另一个batch可能不是saddle point，可以继续训练。</p>
-<img src="/7.png" alt="7" style="zoom:40%;" />
+<img src="7.png" alt="7" style="zoom:40%;" />
 
 <h3 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h3><p>训练时可以通过把上一步的移动和当前计算出的梯度结合，形成新的优化参数的方向，这有利于跳出saddle point，甚至可以帮助“翻越”比较小的山坡，使得loss function得到有效降低。</p>
-<img src="/8.png" alt="8" style="zoom:33%;" />
+<img src="8.png" alt="8" style="zoom:33%;" />
 
-<img src="/9.png" alt="9" style="zoom:33%;" />
+<img src="9.png" alt="9" style="zoom:33%;" />
 
 <h3 id="Learning-rate"><a href="#Learning-rate" class="headerlink" title="Learning rate"></a>Learning rate</h3><p>其实如果learning rate比较大，那么可能会出现还没到saddle point就停下来的可能（此时梯度的模比0还是会大比较多的），如下图所示，loss function的值在两条绿线所指的点反复横跳。</p>
 <p>所以我们需要动态调整learning rate，使得尽量不会出现还没到saddle point就停下来的情况</p>
-<img src="/10.png" alt="10" style="zoom:33%;" />
+<img src="10.png" alt="10" style="zoom:33%;" />
 
 <p>为了动态调整learning rate，我们可以采取两点</p>
 <ul>
@@ -48,11 +48,11 @@
 <p>上式中$\eta\rightarrow\eta_t$</p>
 </li>
 </ul>
-<img src="/12.png" alt="12" style="zoom:33%;" />
+<img src="12.png" alt="12" style="zoom:33%;" />
 
 <p>我们在训练时，经常使用Adam，这个优化方法结合了动态调整RMSProp方法调整learning rate和momentum。一般来说比较有效。</p>
 <h3 id="Loss-function"><a href="#Loss-function" class="headerlink" title="Loss function"></a>Loss function</h3><p>选用不同的loss function，会有不同的error surface，所以选择合适的loss function，可以得到更容易进行优化的error surface。</p>
-<img src="/image-20230111205815038.png" alt="image-20230111205815038" style="zoom:50%;" />
+<img src="image-20230111205815038.png" alt="image-20230111205815038" style="zoom:50%;" />
 
 <h1 id="Training-data的loss很小"><a href="#Training-data的loss很小" class="headerlink" title="Training data的loss很小"></a>Training data的loss很小</h1><p>若testing data的loss比training data的loss大很多，也不一定是过拟合~</p>
 <p>可能的原因</p>
