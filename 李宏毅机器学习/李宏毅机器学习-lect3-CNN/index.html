@@ -21,7 +21,7 @@
 <p>对于每一个区域，有一组神经元负责，每个神经元有一组参数，这一组组参数叫做filter，所有区域共享一组filter</p>
 </blockquote>
 <h2 id="卷积层的运行过程"><a href="#卷积层的运行过程" class="headerlink" title="卷积层的运行过程"></a>卷积层的运行过程</h2><p>之前提到，图片中每一个小区域有一组神经元负责，每一个神经元的参数叫做filter，所有小区域共享一组filter，那么卷积层可以看作每一个filter对图像分别作用，得到一组图像，所有的filter对图像作用后，得到了新的图像，图像的channel数则为filter的数量。这样的一张图片叫做特征图像。</p>
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23182983/1665016186381-53474f12-2b21-4adc-b32a-bbd5828be04b.png?x-oss-process=image%2Fresize%2Cw_640%2Climit_0" alt="197344716650160522.png" style="zoom:67%;" />
+<img src="1665016186381-53474f12-2b21-4adc-b32a-bbd5828be04b-167341103121428.png" alt="197344716650160522.png" style="zoom:67%;" />
 
 <img src="1665016210455-2e51938b-a3c7-4faa-aee4-4b935b3616a1.png" alt="203954116650160332.png" style="zoom:67%;" />
 
@@ -37,7 +37,7 @@
 <p>常用的池化方法有Max Pooling，过程如下图所示，一般而言，池化时分组大小为2x2</p>
 <img src="1665016965375-3ecb1787-d681-4361-9f65-cc415d327b52.png" alt="249661216650169072.png" style="zoom:67%;" />
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/23182983/1665016978099-785f0fea-b999-4e9c-8e10-3e1215840f62.png?x-oss-process=image%2Fresize%2Cw_640%2Climit_0" alt="250809316650169092.png" style="zoom:67%;" />
+<img src="1665016978099-785f0fea-b999-4e9c-8e10-3e1215840f62-167341106637131.png" alt="250809316650169092.png" style="zoom:67%;" />
 
 <p>一般而言，池化常常在卷积层后使用，如一个或两个卷积层后跟一个池化层，用于缩小图片，从而减小运算量。但是这对于网络的效果而言可能是由损害的，因为如果特征特别细小，则池化可能会漏过特征。</p>
 <h1 id="Flatten-layers"><a href="#Flatten-layers" class="headerlink" title="Flatten layers"></a>Flatten layers</h1><p>图像经过一系列卷积、池化后，得到小的特征图像，此时这个特征图像代表图片中较大的、全局的特征，此时就可以把图像展平，然后通过全连接层，经过softmax归一化后，得出分类的结果。</p>
