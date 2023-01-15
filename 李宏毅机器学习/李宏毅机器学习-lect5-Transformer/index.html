@@ -47,7 +47,7 @@ Non autoregressive T"><meta name="keywords" content="Blog,博客,Hexo"><meta con
 </div>
 <h1 tabindex="-1"><span id="transformer-shi-shi-me">Transformer是什么</span></h1>
 <p>Transformer可以理解为是Sequence-to-sequence（简称Seq2seq）的模型，它接受向量序列作为输入，输出向量序列。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761113293.png" alt="1673761113293" style="zoom: 25%;">
+<img src="1673761113293.png" alt="1673761113293" style="zoom: 25%;">
 <h1 tabindex="-1"><span id="transformer-de-ying-yong">Transformer的应用</span></h1>
 <p>Transformer的应用除了上图提到的<strong>语音识别、机器翻译、语音翻译</strong>以外，还有</p>
 <ul>
@@ -58,61 +58,61 @@ Non autoregressive T"><meta name="keywords" content="Blog,博客,Hexo"><meta con
 </ul>
 <h1 tabindex="-1"><span id="transformer-de-jia-gou">Transformer的架构</span></h1>
 <p>Transformer由编码器（Encoder）和解码器（Decoder）组成，前向传播的过程是Encoder将输入向量序列编码产生新的向量序列，然后Decoder将编码的向量结合begin向量（标记着位置，是一个one hot向量）产生第一个输出向量，然后把产生的第一个向量再输入Decoder，产生第二个向量，直到产生end向量为止，代表着输出完成。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173543.png" alt="1673761173543" style="zoom:25%;">
+<img src="1673761173543.png" alt="1673761173543" style="zoom:25%;">
 <p>如下图所示，是Transformer的内部结构，左半边是Encoder，右半边是Decoder。接下来具体解释Encoder和Decoder的组成。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173532.png" alt="1673761173532" style="zoom: 25%;">
+<img src="1673761173532.png" alt="1673761173532" style="zoom: 25%;">
 <h2 tabindex="-1"><span id="encoder">Encoder</span></h2>
 <p>Encoder由一系列block组成，每一个block里面都包含了self-attention层和FC层。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173605.png" alt="1673761173605" style="zoom:25%;">
+<img src="1673761173605.png" alt="1673761173605" style="zoom:25%;">
 <p>实际上，Transformer里融合了ResNet的思想，再self-attention产生了输出向量序列后，还会加上输入的向量，然后在一起进行layer normalization，就是对每一个向量，减掉其平均值后再除以标准差。进行了layer normalization后的向量才会被输入FC。</p>
 <p>如下图所示，FC的部分也有residual的部分，经过了FC、layer normalization后，才得到一个block的输出。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173595.png" alt="1673761173595" style="zoom:25%;">
+<img src="1673761173595.png" alt="1673761173595" style="zoom:25%;">
 <p>此时我们回顾Encoder的架构，首先对于Encoder中的一个block，要做的事情有</p>
 <ol>
 <li>Positional Encoding（位置编码，lect4的笔记里有提到）</li>
 <li>结合ResNet性质的Self-attention+layer normalization</li>
 <li>结合ResNet性质的FC+layer normalization</li>
 </ol>
-<img src="李宏毅机器学习-lect5-Transformer/1673761113253.png" alt="1673761113253" style="zoom:25%;">
+<img src="1673761113253.png" alt="1673761113253" style="zoom:25%;">
 <h2 tabindex="-1"><span id="decoder">Decoder</span></h2>
 <h2 tabindex="-1"><span id="autoregressive-transformer">Autoregressive Transformer</span></h2>
 <p>Autoregressive transformer的前向传播过程大致是结合Encoder的输出和Begin向量得到第一个输出向量，以语言识别为例，然后取输出向量中对应概率最大的字对应的one hot向量作为第一位输出的结果，然后再用第一位输出的结果输入Decoder，产生下一个输出，直至产生End向量，才代表输出结束。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173588.png" alt="1673761173588" style="zoom:18%;">
-<img src="李宏毅机器学习-lect5-Transformer/1673761173582.png" alt="1673761173582" style="zoom:18%;">
+<img src="1673761173588.png" alt="1673761173588" style="zoom:18%;">
+<img src="1673761173582.png" alt="1673761173582" style="zoom:18%;">
 <p>下图是Decoder的内部架构，Positional encoding和FC两个部分和Encoder是差不多的，所以下面重点分析Masked Attention部分和Masked Attention后的Attention block两个部分。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173573.png" alt="1673761173573" style="zoom:25%;">
+<img src="1673761173573.png" alt="1673761173573" style="zoom:25%;">
 <h3 tabindex="-1"><span id="masked-self-attention">Masked Self-attention</span></h3>
 <p>Masked Self-attention和一般的Self-attention不同之处在于：产生第一个输出向量时，只能考虑第一个输入向量，产生第二个输入向量时，只能考虑第一、第二个输入向量，以此类推。下面两张图很好地解释了这个机制</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173562.png" alt="1673761173562" style="zoom:18%;">
-<img src="李宏毅机器学习-lect5-Transformer/1673761173555.png" alt="1673761173555" style="zoom:18%;">
+<img src="1673761173562.png" alt="1673761173562" style="zoom:18%;">
+<img src="1673761173555.png" alt="1673761173555" style="zoom:18%;">
 <h3 tabindex="-1"><span id="cross-attention">Cross attention</span></h3>
 <p>这部分是Decoder内部架构图中第二个attention的模块，下图很好地说明了cross attention地机制。BEGIN向量和“机”向量进行Masked Self-attention，产生q向量，然后再同Encoder产生的输出得到attention score，再加权，通过FC layer得到第二个输出向量。</p>
 <p>最重要的一点就是这个过程中的q向量不是来自于Encoder的输出，而是来自Mask Self-attention的输出。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173525.png" alt="1673761173525" style="zoom:25%;">
+<img src="1673761173525.png" alt="1673761173525" style="zoom:25%;">
 <h2 tabindex="-1"><span id="non-autoregressive-transformer-nat">Non autoregressive Transformer(NAT)</span></h2>
 <p>和autoregressive transformer（AT）不同，NAT一次性产生所有的输出向量，然后截取END向量之前的向量作为最后的输出序列。</p>
 <p>相比AT，它的优势在于的产生速度快，并且可以控制输出长度，但是它的效果往往不如AT。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173538.png" alt="1673761173538" style="zoom:25%;">
+<img src="1673761173538.png" alt="1673761173538" style="zoom:25%;">
 <h1 tabindex="-1"><span id="transformer-de-xun-lian">Transformer的训练</span></h1>
 <h2 tabindex="-1"><span id="loss-de-lai-yuan">loss的来源</span></h2>
 <p>loss的来源可以是每个输出的向量与正确向量的交叉熵，在训练时我们希望交叉熵最小化。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173519-16737789244787.png" alt="1673761173519" style="zoom:25%;">
+<img src="1673761173519-16737789244787.png" alt="1673761173519" style="zoom:25%;">
 <h2 tabindex="-1"><span id="xun-lian-de-yi-xie-tips">训练的一些tips</span></h2>
 <h3 tabindex="-1"><span id="teacher-forcing">Teacher Forcing</span></h3>
 <p>为了防止训练时出现因第一个向量输出错误导致接下来的训练错误这样“一步错，步步错”的情况，所以我们在训练时把正确答案输入给decoder。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173519.png" alt="1673761173519" style="zoom:25%;">
+<img src="1673761173519.png" alt="1673761173519" style="zoom:25%;">
 <h3 tabindex="-1"><span id="copy-mechanism">Copy Mechanism</span></h3>
 <p>有时适当地从输入中进行一些copy，可以更好地完成任务。比如在聊天机器人训练中，可以对人名进行copy，因为一个人名在训练资料中出现的次数可能很少，网络无法通过学习习得输出正确人名的能力，所以对人名进行直接copy。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173513.png" alt="1673761173513" style="zoom:25%;">
+<img src="1673761173513.png" alt="1673761173513" style="zoom:25%;">
 <h3 tabindex="-1"><span id="guided-attention">Guided Attention</span></h3>
 <p>Guided Attention，可以理解为用先验知识来限制self attention层的注意力机制，比如在语音识别中，一个音节的识别只与对应时刻的向量及其周边向量有关。所以应该把attention限制在这个时刻附近较小的范围内。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173505.png" alt="1673761173505" style="zoom:25%;">
+<img src="1673761173505.png" alt="1673761173505" style="zoom:25%;">
 <h3 tabindex="-1"><span id="beam-search">Beam Search</span></h3>
 <p>可以把找输出向量序列看作是树形搜索，所以就把问题看作是设计合适的搜索算法，使得全局的loss最小。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173500.png" alt="1673761173500" style="zoom:25%;">
+<img src="1673761173500.png" alt="1673761173500" style="zoom:25%;">
 <h3 tabindex="-1"><span id="exposure-bias">Exposure bias</span></h3>
 <p>训练时我们把正确答案直接喂给decoder，但是如果在测试的时候产生了错误的向量，可能就会产生mismatch，从而影响后面的输出。所以我们可以在训练时就适当地喂入错误的向量，使得模型的适应能力更强。</p>
-<img src="李宏毅机器学习-lect5-Transformer/1673761173493.png" alt="1673761173493" style="zoom:25%;">
+<img src="1673761173493.png" alt="1673761173493" style="zoom:25%;">
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
 </p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-14</span><a class="tag" href="/categories/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Transformer/" title="Transformer">Transformer </a><span class="leancloud_visitors"></span><span>大约1442个字, 4分钟48秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer%0Ahttp://hezj-opt.github.io/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/" title="记手搓ResNet的经历">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect4-Self-attention/" title="李宏毅机器学习-lect4-Self attention">下一篇</a></li></ul></div><script src="/js/visitors.js"></script></div></div></div></div><script src="/js/darkLightToggle.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
