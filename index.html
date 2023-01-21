@@ -1,16 +1,10 @@
-<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>核子的Blog</title><meta name="description" content="A simple blog"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a class="current" href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect6-GAN/">李宏毅机器学习-lect6-GAN</a></h3></div><div class="post-content"><p>GAN的基本思想
-GAN的理论
-Conditional GAN（条件式生成）
-Cycle-GAN
+<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>核子的Blog</title><meta name="description" content="A simple blog"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a class="current" href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect6-GAN/">李宏毅机器学习-lect6-GAN</a></h3></div><div class="post-content"><p>GAN的基本思想GAN的理论Conditional GAN（条件式生成）Cycle-GAN</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-20</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/GAN/" title="GAN">GAN </a><span class="leancloud_visitors"></span><span>大约21个字, 4秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93/">李宏毅机器学习-hw3-CNN-总结</a></h3></div><div class="post-content"><p>
 
-
-</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-20</span><a class="tag" href="/categories/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/GAN/" title="GAN">GAN </a><span class="leancloud_visitors"></span><span>大约21个字, 4秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93/">李宏毅机器学习-hw3-CNN-总结</a></h3></div><div class="post-content"><p>
 
 
 任务介绍
 训练结果
 训练方法
-
 Data augmentation
 模型设计
 Loss function的选择与调参
@@ -19,10 +13,9 @@ Test time augmentation
 
 
 进一步提升的可能
-
 数据增强可能可以尝试mix up
 模型设计可能可以继续尝试
-Learning rat...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-18</span><a class="tag" href="/categories/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Computer-Vision/" title="Computer Vision">Computer Vision </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><i class="fa fa-tag"></i><a class="tag" href="/tags/ResNet/" title="ResNet">ResNet </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Learning-rate优化/" title="Learning rate优化">Learning rate优化 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Test-time-augmentation/" title="Test time augmentation">Test time augmentation </a><span class="leancloud_visitors"></span><span>大约2061个字, 6分钟52秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/">记手搓ResNet的经历</a></h3></div><div class="post-content"><p>
+Learning rate...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-18</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Computer-Vision/" title="Computer Vision">Computer Vision </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><i class="fa fa-tag"></i><a class="tag" href="/tags/ResNet/" title="ResNet">ResNet </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Learning-rate优化/" title="Learning rate优化">Learning rate优化 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Test-time-augmentation/" title="Test time augmentation">Test time augmentation </a><span class="leancloud_visitors"></span><span>大约2060个字, 6分钟52秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/">记手搓ResNet的经历</a></h3></div><div class="post-content"><p>
 如果不想听我叨叨的话可以直接前往代码部分进行copy，并参照注释里的demo进行使用
 
 
@@ -47,38 +40,36 @@ References
 
 
 前言
-在上学...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-15</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><i class="fa fa-tag"></i><a class="tag" href="/tags/ResNet/" title="ResNet">ResNet </a><span class="leancloud_visitors"></span><span>大约2088个字, 6分钟57秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer/">李宏毅机器学习-lect5-Transformer</a></h3></div><div class="post-content"><p>
+在上学...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-15</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><i class="fa fa-tag"></i><a class="tag" href="/tags/ResNet/" title="ResNet">ResNet </a><span class="leancloud_visitors"></span><span>大约2088个字, 6分钟57秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer/">李宏毅机器学习-lect5-Transformer</a></h3></div><div class="post-content"><p>
+
 
 
 Transformer是什么
 Transformer的应用
 Transformer的架构
-
 Encoder
 Decoder
 Autoregressive Transformer
-
 Masked Self-attention
 Cross attention
 
 
-Non autoregressive Trans...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-14</span><a class="tag" href="/categories/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Transformer/" title="Transformer">Transformer </a><span class="leancloud_visitors"></span><span>大约1442个字, 4分钟48秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect4-Self-attention/">李宏毅机器学习-lect4-Self attention</a></h3></div><div class="post-content"><p>
+Non autoregressive Transf...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-14</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Transformer/" title="Transformer">Transformer </a><span class="leancloud_visitors"></span><span>大约1436个字, 4分钟47秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect4-Self-attention/">李宏毅机器学习-lect4-Self attention</a></h3></div><div class="post-content"><p>
+
 
 
 Self attention 解决什么问题
-
 FC(Fully Connected)有什么不足
 
 
 Self attention 的架构
 Self attention 的基本计算过程
-
 求attention score
 求解Self attention层输出的向量
 矩阵视角下的计算过程
 
 
-Self att...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-12</span><a class="tag" href="/categories/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Self-attention/" title="Self attention">Self attention </a><span class="leancloud_visitors"></span><span>大约1924个字, 6分钟24秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/hexo%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/">hexo配置问题</a></h3></div><div class="post-content"><p>
+Self atte...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-12</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Self-attention/" title="Self attention">Self attention </a><span class="leancloud_visitors"></span><span>大约1779个字, 5分钟55秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/hexo%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/">hexo配置问题</a></h3></div><div class="post-content"><p>
 记录hexo配置中遇到的各种问题，随缘更新中……
 
 
@@ -107,17 +98,15 @@ OS：Windows 10
 插入代码
 
 
-About页...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-12</span><a class="tag" href="/categories/环境配置/" title="环境配置">环境配置 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/环境配置/" title="环境配置">环境配置 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/hexo/" title="hexo">hexo </a><span class="leancloud_visitors"></span><span>大约704个字, 2分钟20秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%AD%E7%BB%83%E4%BC%9A%E5%A4%B1%E8%B4%A5/">李宏毅机器学习-为什么训练会失败</a></h3></div><div class="post-content"><p>
+About页...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-12</span><a class="tag" href="/categories/环境配置/" title="环境配置">环境配置 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/环境配置/" title="环境配置">环境配置 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/hexo/" title="hexo">hexo </a><span class="leancloud_visitors"></span><span>大约704个字, 2分钟20秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%AD%E7%BB%83%E4%BC%9A%E5%A4%B1%E8%B4%A5/">李宏毅机器学习-为什么训练会失败</a></h3></div><div class="post-content"><p>
+
 
 
 
 Training loss很高
-
 这时发生了什么
 训练方法
-
 Batch
-
 Batch对训练效率影响
 Batch对训练效果影响
 
@@ -130,16 +119,13 @@ Loss function
 
 
 Training data的loss很小
-
 过拟合
-
 调整模型复杂度
 添加更多数据
 
 
-Mi...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-11</span><a class="tag" href="/categories/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><span class="leancloud_visitors"></span><span>大约1202个字, 4分钟0秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect3-CNN/">李宏毅机器学习-lect3-CNN</a></h3></div><div class="post-content"><p>CNN 的想法
+Mismat...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-11</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><span class="leancloud_visitors"></span><span>大约1107个字, 3分钟41秒读完</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect3-CNN/">李宏毅机器学习-lect3-CNN</a></h3></div><div class="post-content"><p>CNN 的想法
+对于图片分类的任务，我们可以采用让特征识别（这与人类分类物体的方法是类似的）的方法，让每一个神经元只与部分区域（Receptive field）关联，而不需要每一层都full connect。所以，CNN是为了影像的特性而生的，把CNN用于影像领域外的任务要仔细思考是否出现影像类似的特性。
 
-对于图片分类的任务，我们可以采用让特征识别（这与人类分类物体的方法是类似的）的方法，让每一个神经元只与部分区域（Receptive field）关联，而不需要每一层都full connect。
-所以，CNN是为了影像的特性而生的，把CNN用于影像领域外的任务要仔细思考是否出现影像类似的特性。
 
-...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-11</span><a class="tag" href="/categories/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Computer-Vision/" title="Computer Vision">Computer Vision </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><span class="leancloud_visitors"></span><span>大约1131个字, 3分钟46秒读完</span></div></div></div></div><div class="pagination"><ul class="clearfix"></ul></div></div></div></div><script src="/js/darkLightToggle.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
+卷...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-11</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Computer-Vision/" title="Computer Vision">Computer Vision </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><span class="leancloud_visitors"></span><span>大约1131个字, 3分钟46秒读完</span></div></div></div></div><div class="pagination"><ul class="clearfix"></ul></div></div></div></div><script src="/js/darkLightToggle.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
