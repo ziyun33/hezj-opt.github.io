@@ -13,38 +13,36 @@ Test time augmentation
 
 数据增强可能可以尝试mix up
 模型设计可能可以继续尝试
-Learning"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">1.</span> <span class="toclist-text">任务介绍</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">2.</span> <span class="toclist-text">训练结果</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">3.</span> <span class="toclist-text">训练方法</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.1.</span> <span class="toclist-text">Data augmentation</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.2.</span> <span class="toclist-text">模型设计</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.3.</span> <span class="toclist-text">Loss function的选择与调参</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.4.</span> <span class="toclist-text">Learning rate调整方案</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.5.</span> <span class="toclist-text">Test time augmentation</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">4.</span> <span class="toclist-text">进一步提升的可能</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.1.</span> <span class="toclist-text">数据增强可能可以尝试mix up</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.2.</span> <span class="toclist-text">模型设计可能可以继续尝试</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.3.</span> <span class="toclist-text">Learning rate调整方案有待提升</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.4.</span> <span class="toclist-text">Cross Validation + Ensemble</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">5.</span> <span class="toclist-text">其它值得记录的东西</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">5.1.</span> <span class="toclist-text">autodl tensorboard使用</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">5.2.</span> <span class="toclist-text">layer的梯度变化</span></a></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-hw3-CNN-总结</a></h3></div><div class="post-content"><p><div class="toc">
-<!-- toc -->
+Learning"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">1.</span> <span class="toclist-text">任务介绍</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">2.</span> <span class="toclist-text">训练结果</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">3.</span> <span class="toclist-text">训练方法</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.1.</span> <span class="toclist-text">Data augmentation</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.2.</span> <span class="toclist-text">模型设计</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.3.</span> <span class="toclist-text">Loss function的选择与调参</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.4.</span> <span class="toclist-text">Learning rate调整方案</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">3.5.</span> <span class="toclist-text">Test time augmentation</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">4.</span> <span class="toclist-text">进一步提升的可能</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.1.</span> <span class="toclist-text">数据增强可能可以尝试mix up</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.2.</span> <span class="toclist-text">模型设计可能可以继续尝试</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.3.</span> <span class="toclist-text">Learning rate调整方案有待提升</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">4.4.</span> <span class="toclist-text">Cross Validation + Ensemble</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link"><span class="toclist-number">5.</span> <span class="toclist-text">其它值得记录的东西</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">5.1.</span> <span class="toclist-text">autodl tensorboard使用</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link"><span class="toclist-number">5.2.</span> <span class="toclist-text">layer的梯度变化</span></a></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-hw3-CNN-总结</a></h3></div><div class="post-content"><p><!-- toc -->
 <ul>
-<li><a href="#ren-wu-jie-shao">任务介绍</a></li>
-<li><a href="#xun-lian-jie-guo">训练结果</a></li>
-<li><a href="#xun-lian-fang-fa">训练方法</a>
+<li><a href="#%E4%BB%BB%E5%8A%A1%E4%BB%8B%E7%BB%8D">任务介绍</a></li>
+<li><a href="#%E8%AE%AD%E7%BB%83%E7%BB%93%E6%9E%9C">训练结果</a></li>
+<li><a href="#%E8%AE%AD%E7%BB%83%E6%96%B9%E6%B3%95">训练方法</a>
 <ul>
 <li><a href="#data-augmentation">Data augmentation</a></li>
-<li><a href="#mo-xing-she-ji">模型设计</a></li>
-<li><a href="#loss-function-de-xuan-ze-yu-diao-can">Loss function的选择与调参</a></li>
-<li><a href="#learning-rate-diao-zheng-fang-an">Learning rate调整方案</a></li>
+<li><a href="#%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1">模型设计</a></li>
+<li><a href="#loss-function%E7%9A%84%E9%80%89%E6%8B%A9%E4%B8%8E%E8%B0%83%E5%8F%82">Loss function的选择与调参</a></li>
+<li><a href="#learning-rate%E8%B0%83%E6%95%B4%E6%96%B9%E6%A1%88">Learning rate调整方案</a></li>
 <li><a href="#test-time-augmentation">Test time augmentation</a></li>
 </ul>
 </li>
-<li><a href="#jin-yi-bu-ti-sheng-de-ke-neng">进一步提升的可能</a>
+<li><a href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%8F%90%E5%8D%87%E7%9A%84%E5%8F%AF%E8%83%BD">进一步提升的可能</a>
 <ul>
-<li><a href="#shu-ju-zeng-qiang-ke-neng-ke-yi-chang-shi-mix-up">数据增强可能可以尝试mix up</a></li>
-<li><a href="#mo-xing-she-ji-ke-neng-ke-yi-ji-xu-chang-shi">模型设计可能可以继续尝试</a></li>
-<li><a href="#learning-rate-diao-zheng-fang-an-you-dai-ti-sheng">Learning rate调整方案有待提升</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%E5%8F%AF%E8%83%BD%E5%8F%AF%E4%BB%A5%E5%B0%9D%E8%AF%95mix-up">数据增强可能可以尝试mix up</a></li>
+<li><a href="#%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1%E5%8F%AF%E8%83%BD%E5%8F%AF%E4%BB%A5%E7%BB%A7%E7%BB%AD%E5%B0%9D%E8%AF%95">模型设计可能可以继续尝试</a></li>
+<li><a href="#learning-rate%E8%B0%83%E6%95%B4%E6%96%B9%E6%A1%88%E6%9C%89%E5%BE%85%E6%8F%90%E5%8D%87">Learning rate调整方案有待提升</a></li>
 <li><a href="#cross-validation-ensemble">Cross Validation + Ensemble</a></li>
 </ul>
 </li>
-<li><a href="#qi-ta-zhi-de-ji-lu-de-dong-xi">其它值得记录的东西</a>
+<li><a href="#%E5%85%B6%E5%AE%83%E5%80%BC%E5%BE%97%E8%AE%B0%E5%BD%95%E7%9A%84%E4%B8%9C%E8%A5%BF">其它值得记录的东西</a>
 <ul>
-<li><a href="#autodl-tensorboard-shi-yong">autodl tensorboard使用</a></li>
-<li><a href="#layer-de-ti-du-bian-hua">layer的梯度变化</a></li>
+<li><a href="#autodl-tensorboard%E4%BD%BF%E7%94%A8">autodl tensorboard使用</a></li>
+<li><a href="#layer%E7%9A%84%E6%A2%AF%E5%BA%A6%E5%8F%98%E5%8C%96">layer的梯度变化</a></li>
 </ul>
 </li>
 </ul>
 <!-- tocstop -->
-</div>
-<h1 tabindex="-1"><span id="ren-wu-jie-shao">任务介绍</span></h1>
+<h1 tabindex="-1"><span id="任务介绍">任务介绍</span></h1>
 <p>这个作业要求训练一个能对11种食物进行分类的CNN。使用的数据集为food-11，数据集划分如下：</p>
 <ul>
 <li>训练集：9866张带有label的图像</li>
@@ -59,7 +57,7 @@ Learning"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=
 <li>Strong : 0.81872</li>
 <li>Boss : 0.88446</li>
 </ul>
-<h1 tabindex="-1"><span id="xun-lian-jie-guo">训练结果</span></h1>
+<h1 tabindex="-1"><span id="训练结果">训练结果</span></h1>
 <table>
 <thead>
 <tr>
@@ -114,7 +112,7 @@ Learning"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=
 </tr>
 </tbody>
 </table>
-<h1 tabindex="-1"><span id="xun-lian-fang-fa">训练方法</span></h1>
+<h1 tabindex="-1"><span id="训练方法">训练方法</span></h1>
 <h2 tabindex="-1"><span id="data-augmentation">Data augmentation</span></h2>
 <p>在观察了部分数据之后，发现合理的图片增强方式包括但不限于</p>
 <ul>
@@ -126,20 +124,20 @@ Learning"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=
 </ul>
 <p>最终代码如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">train_tfm = transforms.Compose([</span><br><span class="line">    <span class="comment"># Resize the image into a fixed shape (height = width = 128)</span></span><br><span class="line">    transforms.RandomResizedCrop((<span class="number">128</span>, <span class="number">128</span>), scale=(<span class="number">0.7</span>, <span class="number">1.0</span>)),</span><br><span class="line">    transforms.RandomHorizontalFlip(p=<span class="number">0.5</span>),   <span class="comment"># 随机水平翻转</span></span><br><span class="line">    transforms.RandomVerticalFlip(p=<span class="number">0.5</span>),     <span class="comment"># 随机上下翻转</span></span><br><span class="line">    transforms.RandomRotation(degrees=(<span class="number">0</span>, <span class="number">180</span>)), <span class="comment"># 图像随机旋转</span></span><br><span class="line">    transforms.RandomAffine(<span class="number">30</span>),</span><br><span class="line">    transforms.RandomGrayscale(<span class="number">0.2</span>), <span class="comment"># 随机灰度化</span></span><br><span class="line">    <span class="comment"># You may add some transforms here.</span></span><br><span class="line">    <span class="comment"># ToTensor() should be the last one of the transforms.</span></span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-<h2 tabindex="-1"><span id="mo-xing-she-ji">模型设计</span></h2>
+<h2 tabindex="-1"><span id="模型设计">模型设计</span></h2>
 <p>模型使用的是ResNet，ResNet的搭建见：<a href="https://hezj-opt.github.io/Deep-Learning/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/">记手搓ResNet的经历 · 核子的Blog (hezj-opt.github.io)</a></p>
 <p>在调整参数方面，最终调整预卷积层的通道数为32，全连接层的dropout为0.4，残差块采用两个3x3卷积层和shortcut path构成的残差块，最终使用通道数为64、128、256、512的残差块数量分别为1、2、1、1</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = resnet(resblock_basic, <span class="number">3</span>, [<span class="number">64</span>, <span class="number">128</span>, <span class="number">256</span>, <span class="number">512</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>], <span class="number">11</span>).to(device)</span><br></pre></td></tr></table></figure>
 <p>在第4次训练中，使用过层数较少的网络（<code>model = resnet(resblock_basic, 3, [64, 128, 256], [2, 2, 1], 11).to(device)</code>），但是效果不佳，当时以为是over fitting，所以在第5次训练中把网络改得更简单了（<code>model = resnet(resblock_basic, 3, [64, 128, 256], [2, 1, 1], 11).to(device)</code>），修改后发现效果不仅没有显著提升，而且训练时长增加了非常多（第4次训练大致12小时，第5次训练花了将近16小时）。所以发现是模型欠拟合，决定增加模型复杂度，才在第6次训练后通过strong baseline。</p>
 <p>鉴于几次调参后的效果，推断三次训练在下图中位置红色线框覆盖的区间内。</p>
 <img src="image-20230118210452127.png" alt="image-20230118210452127" style="zoom: 67%;">
-<h2 tabindex="-1"><span id="loss-function-de-xuan-ze-yu-diao-can">Loss function的选择与调参</span></h2>
+<h2 tabindex="-1"><span id="loss-function的选择与调参">Loss function的选择与调参</span></h2>
 <p>查阅资料发现，使用Focal loss会比Cross entropy有更快的收敛速度（参数γ导致），而且更适合各个标签的数据集不均的情况（参数α导致）。</p>
 <p>下图显示了由于Focal loss的γ参数，Focal loss会收敛得更快</p>
 <img src="image-20230118213336141.png" alt="image-20230118213336141" style="zoom: 50%;">
 <p>Focal loss中的α参数可以平衡训练集中各类图片数量的差异，比如在本次任务中，我先统计训练集中了11类食物的数量，然后对样本少的赋比较高的α值，样本多的食物赋比较低的α值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">count = count / np.<span class="built_in">max</span>(count) <span class="comment"># count 为11类食物样本数的统计结果</span></span><br><span class="line">alpha = <span class="number">1</span> / count</span><br><span class="line"><span class="comment"># alpha = [1, 2.317, 0.663, 1.008, 1.172, 0.750, 2.259, 3.55, 1.163, 0.663, 1.402]</span></span><br></pre></td></tr></table></figure>
-<h2 tabindex="-1"><span id="learning-rate-diao-zheng-fang-an">Learning rate调整方案</span></h2>
+<h2 tabindex="-1"><span id="learning-rate调整方案">Learning rate调整方案</span></h2>
 <p>优化器选择Adam，初始学习率为0.0004，设置decay=1e-5</p>
 <p>在学习率调整上，通过余弦退火调整学习率，退火周期为16，即每过16轮，学习率突然增大，然后再慢慢减小。如下图除了蓝线、红线以外的曲线所示。</p>
 <img src="image-20230118225346987.png" alt="image-20230118225346987" style="zoom: 60%;">
@@ -149,20 +147,20 @@ Learning"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=
 <img src="image-20230118231119754.png" alt="image-20230118231119754" style="zoom: 60%;">
 <p>比如在本次hw中，我对每张测试图片产生五张增强图片，对六张图片进行预测，得到 <code>preds</code>列表，内含未增强图像的预测结果（preds[0]）和五张增强图像的预测结果。最终的预测结果为</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">preds = <span class="number">0.5</span>* preds[<span class="number">0</span>] + <span class="number">0.1</span> * preds[<span class="number">1</span>] + <span class="number">0.1</span> * preds[<span class="number">2</span>] + <span class="number">0.1</span> * preds[<span class="number">3</span>] + <span class="number">0.1</span> * preds[<span class="number">4</span>] + <span class="number">0.1</span> * preds[<span class="number">5</span>]</span><br><span class="line">prediction = np.argmax(preds, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h1 tabindex="-1"><span id="jin-yi-bu-ti-sheng-de-ke-neng">进一步提升的可能</span></h1>
-<h2 tabindex="-1"><span id="shu-ju-zeng-qiang-ke-neng-ke-yi-chang-shi-mix-up">数据增强可能可以尝试mix up</span></h2>
+<h1 tabindex="-1"><span id="进一步提升的可能">进一步提升的可能</span></h1>
+<h2 tabindex="-1"><span id="数据增强可能可以尝试mix-up">数据增强可能可以尝试mix up</span></h2>
 <p>mix up数据增强是一种进阶的数据增强，它可以使得模型在判断时不会那么绝对，可以减小过拟合。如果要实现mix up，要改写Dataset类，并且还需要写适用于mix up的loss function。</p>
 <img src="image-20230118233034792.png" alt="image-20230118233034792" style="zoom:60%;">
-<h2 tabindex="-1"><span id="mo-xing-she-ji-ke-neng-ke-yi-ji-xu-chang-shi">模型设计可能可以继续尝试</span></h2>
+<h2 tabindex="-1"><span id="模型设计可能可以继续尝试">模型设计可能可以继续尝试</span></h2>
 <p>过了strong baseline以后我没有继续调整模型，表格中最后一次产生的结果实际上用的是第6次训练得到的模型，只是在测试时采取tta。所以可能可以继续尝试加深模型，直至出现过拟合，再适当减小模型。</p>
-<h2 tabindex="-1"><span id="learning-rate-diao-zheng-fang-an-you-dai-ti-sheng">Learning rate调整方案有待提升</span></h2>
+<h2 tabindex="-1"><span id="learning-rate调整方案有待提升">Learning rate调整方案有待提升</span></h2>
 <p>我的实现中退火周期时固定的，但是看了原始论文后，发现设置合适的初始退火周期，然后在每个退火周期后，将退火周期增大一倍可能是个不错的策略。</p>
 <h2 tabindex="-1"><span id="cross-validation-ensemble">Cross Validation + Ensemble</span></h2>
 <p>简单地来说，Cross Validation + Ensemble是先把训练集和验证集重新进行划分，进行k种划分，训练出k个模型，最终用k个模型对图片进行多次预测。效仿tta的方式融合产生预测结果，此时不同的模型之间可以互相弥补缺陷，所以可以得到比较好的预测结果。</p>
 <p>但是这玩意真的耗时间，第6次训练花费时间为8-9h，如果训练四个模型得35h左右……</p>
 <img src="image-20230118233623821.png" alt="image-20230118233623821" style="zoom:67%;">
-<h1 tabindex="-1"><span id="qi-ta-zhi-de-ji-lu-de-dong-xi">其它值得记录的东西</span></h1>
-<h2 tabindex="-1"><span id="autodl-tensorboard-shi-yong">autodl tensorboard使用</span></h2>
+<h1 tabindex="-1"><span id="其它值得记录的东西">其它值得记录的东西</span></h1>
+<h2 tabindex="-1"><span id="autodl-tensorboard使用">autodl tensorboard使用</span></h2>
 <p>本次作业中我学习了autodl自带的tensorboard，发现操作十分简单。</p>
 <ol>
 <li>
@@ -182,7 +180,7 @@ Learning"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># loss 曲线</span></span><br><span class="line">writer.add_scalars(main_tag=<span class="string">&#x27;Loss&#x27;</span>,</span><br><span class="line">                   tag_scalar_dict=&#123;<span class="string">&#x27;train&#x27;</span>: train_loss,</span><br><span class="line">                                    <span class="string">&#x27;valid&#x27;</span>: valid_loss&#125;,</span><br><span class="line">                   global_step=epoch + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Accuarcy曲线</span></span><br><span class="line">writer.add_scalars(main_tag=<span class="string">&#x27;Accuracy&#x27;</span>,</span><br><span class="line">                   tag_scalar_dict=&#123;<span class="string">&#x27;train&#x27;</span>: <span class="built_in">float</span>(train_acc),</span><br><span class="line">                                    <span class="string">&#x27;valid&#x27;</span>: <span class="built_in">float</span>(valid_acc)&#125;,</span><br><span class="line">                   global_step=epoch + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 各层的参数的梯度绝对值曲线</span></span><br><span class="line"><span class="keyword">for</span> name, parms <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">	writer.add_scalar(<span class="string">f&quot;Grad/<span class="subst">&#123;name&#125;</span>&quot;</span>, torch.norm(parms.grad), epoch + <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 tabindex="-1"><span id="layer-de-ti-du-bian-hua">layer的梯度变化</span></h2>
+<h2 tabindex="-1"><span id="layer的梯度变化">layer的梯度变化</span></h2>
 <p>下面两张图时预卷积层的weight的梯度模长变化和某个残差块中的一个卷积层的weight的梯度模长变化（经过平滑后的结果）。所以说可以发现哪怕训练到几乎停滞，其实并不是陷入局部最小值，甚至不在鞍点。所以之前推测学习率调整方案还可以进一步优化。</p>
 <img src="Grad_fc.1.weight.png" alt="Grad_fc.1.weight">
 <p><img src="Grad_resblocks.0.0.res_function.1.weight.png" alt="Grad_resblocks.0.0.res_function.1.weight"></p>
