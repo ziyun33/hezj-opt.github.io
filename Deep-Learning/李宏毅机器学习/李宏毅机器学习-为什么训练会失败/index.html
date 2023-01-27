@@ -23,7 +23,119 @@ Training data的loss很小
 调整模型复杂度
 添加更多数据
 
-"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#training-loss-hen-gao"><span class="toclist-number">1.</span> <span class="toclist-text">Training loss很高</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#zhe-shi-fa-sheng-liao-shi-me"><span class="toclist-number">1.1.</span> <span class="toclist-text">这时发生了什么</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#xun-lian-fang-fa"><span class="toclist-number">1.2.</span> <span class="toclist-text">训练方法</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#batch"><span class="toclist-number">1.2.1.</span> <span class="toclist-text">Batch</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#batch-dui-xun-lian-xiao-lu-ying-xiang"><span class="toclist-number">1.2.1.1.</span> <span class="toclist-text">Batch对训练效率影响</span></a></li><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#batch-dui-xun-lian-xiao-guo-ying-xiang"><span class="toclist-number">1.2.1.2.</span> <span class="toclist-text">Batch对训练效果影响</span></a></li></ol></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#momentum"><span class="toclist-number">1.2.2.</span> <span class="toclist-text">Momentum</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#learning-rate"><span class="toclist-number">1.2.3.</span> <span class="toclist-text">Learning rate</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#loss-function"><span class="toclist-number">1.2.4.</span> <span class="toclist-text">Loss function</span></a></li></ol></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#training-data-de-loss-hen-xiao"><span class="toclist-number">2.</span> <span class="toclist-text">Training data的loss很小</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#guo-ni-he"><span class="toclist-number">2.1.</span> <span class="toclist-text">过拟合</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#diao-zheng-mo-xing-fu-za-du"><span class="toclist-number">2.1.1.</span> <span class="toclist-text">调整模型复杂度</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#tian-jia-geng-duo-shu-ju"><span class="toclist-number">2.1.2.</span> <span class="toclist-text">添加更多数据</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#mismatch"><span class="toclist-number">2.2.</span> <span class="toclist-text">Mismatch</span></a></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-为什么训练会失败</a></h3></div><div class="post-content"><p><img src="1664787777114-1c1f9ee6-d6e7-4af1-aa5e-8772c92a48ce.png" alt="27898416645942142.png" style="zoom: 67%;">
+"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#training-loss-hen-gao"><span class="toclist-number">1.</span> <span class="toclist-text">Training loss很高</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#zhe-shi-fa-sheng-liao-shi-me"><span class="toclist-number">1.1.</span> <span class="toclist-text">这时发生了什么</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#xun-lian-fang-fa"><span class="toclist-number">1.2.</span> <span class="toclist-text">训练方法</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#batch"><span class="toclist-number">1.2.1.</span> <span class="toclist-text">Batch</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#batch-dui-xun-lian-xiao-lu-ying-xiang"><span class="toclist-number">1.2.1.1.</span> <span class="toclist-text">Batch对训练效率影响</span></a></li><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#batch-dui-xun-lian-xiao-guo-ying-xiang"><span class="toclist-number">1.2.1.2.</span> <span class="toclist-text">Batch对训练效果影响</span></a></li></ol></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#momentum"><span class="toclist-number">1.2.2.</span> <span class="toclist-text">Momentum</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#learning-rate"><span class="toclist-number">1.2.3.</span> <span class="toclist-text">Learning rate</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#loss-function"><span class="toclist-number">1.2.4.</span> <span class="toclist-text">Loss function</span></a></li></ol></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#training-data-de-loss-hen-xiao"><span class="toclist-number">2.</span> <span class="toclist-text">Training data的loss很小</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#guo-ni-he"><span class="toclist-number">2.1.</span> <span class="toclist-text">过拟合</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#diao-zheng-mo-xing-fu-za-du"><span class="toclist-number">2.1.1.</span> <span class="toclist-text">调整模型复杂度</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#tian-jia-geng-duo-shu-ju"><span class="toclist-number">2.1.2.</span> <span class="toclist-text">添加更多数据</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#mismatch"><span class="toclist-number">2.2.</span> <span class="toclist-text">Mismatch</span></a></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-为什么训练会失败</a></h3></div><div class="post-content"><p><img src="1664787777114-1c1f9ee6-d6e7-4af1-aa5e-8772c92a48ce.png" alt="27898416645942142.png" style="zoom: 67%;">
 
 <h1 tabindex="-1"><span id="training-loss-hen-gao">Training loss很高</span><a href="#training-loss-hen-gao" class="header-anchor">#</a></h1>
 <h2 tabindex="-1"><span id="zhe-shi-fa-sheng-liao-shi-me">这时发生了什么</span><a href="#zhe-shi-fa-sheng-liao-shi-me" class="header-anchor">#</a></h2>

@@ -10,7 +10,119 @@ Masked Self-attention
 Cross attention
 
 
-Non autoregressive T"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-shi-shi-me"><span class="toclist-number">1.</span> <span class="toclist-text">Transformer是什么</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-ying-yong"><span class="toclist-number">2.</span> <span class="toclist-text">Transformer的应用</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-jia-gou"><span class="toclist-number">3.</span> <span class="toclist-text">Transformer的架构</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#encoder"><span class="toclist-number">3.1.</span> <span class="toclist-text">Encoder</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#decoder"><span class="toclist-number">3.2.</span> <span class="toclist-text">Decoder</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#autoregressive-transformer"><span class="toclist-number">3.3.</span> <span class="toclist-text">Autoregressive Transformer</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#masked-self-attention"><span class="toclist-number">3.3.1.</span> <span class="toclist-text">Masked Self-attention</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#cross-attention"><span class="toclist-number">3.3.2.</span> <span class="toclist-text">Cross attention</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#non-autoregressive-transformer-nat"><span class="toclist-number">3.4.</span> <span class="toclist-text">Non autoregressive Transformer(NAT)</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-xun-lian"><span class="toclist-number">4.</span> <span class="toclist-text">Transformer的训练</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#loss-de-lai-yuan"><span class="toclist-number">4.1.</span> <span class="toclist-text">loss的来源</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#xun-lian-de-yi-xie-tips"><span class="toclist-number">4.2.</span> <span class="toclist-text">训练的一些tips</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#teacher-forcing"><span class="toclist-number">4.2.1.</span> <span class="toclist-text">Teacher Forcing</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#copy-mechanism"><span class="toclist-number">4.2.2.</span> <span class="toclist-text">Copy Mechanism</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#guided-attention"><span class="toclist-number">4.2.3.</span> <span class="toclist-text">Guided Attention</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#beam-search"><span class="toclist-number">4.2.4.</span> <span class="toclist-text">Beam Search</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#exposure-bias"><span class="toclist-number">4.2.5.</span> <span class="toclist-text">Exposure bias</span></a></li></ol></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-lect5-Transformer</a></h3></div><div class="post-content"><p>
+Non autoregressive T"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-shi-shi-me"><span class="toclist-number">1.</span> <span class="toclist-text">Transformer是什么</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-ying-yong"><span class="toclist-number">2.</span> <span class="toclist-text">Transformer的应用</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-jia-gou"><span class="toclist-number">3.</span> <span class="toclist-text">Transformer的架构</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#encoder"><span class="toclist-number">3.1.</span> <span class="toclist-text">Encoder</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#decoder"><span class="toclist-number">3.2.</span> <span class="toclist-text">Decoder</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#autoregressive-transformer"><span class="toclist-number">3.3.</span> <span class="toclist-text">Autoregressive Transformer</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#masked-self-attention"><span class="toclist-number">3.3.1.</span> <span class="toclist-text">Masked Self-attention</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#cross-attention"><span class="toclist-number">3.3.2.</span> <span class="toclist-text">Cross attention</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#non-autoregressive-transformer-nat"><span class="toclist-number">3.4.</span> <span class="toclist-text">Non autoregressive Transformer(NAT)</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-xun-lian"><span class="toclist-number">4.</span> <span class="toclist-text">Transformer的训练</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#loss-de-lai-yuan"><span class="toclist-number">4.1.</span> <span class="toclist-text">loss的来源</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#xun-lian-de-yi-xie-tips"><span class="toclist-number">4.2.</span> <span class="toclist-text">训练的一些tips</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#teacher-forcing"><span class="toclist-number">4.2.1.</span> <span class="toclist-text">Teacher Forcing</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#copy-mechanism"><span class="toclist-number">4.2.2.</span> <span class="toclist-text">Copy Mechanism</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#guided-attention"><span class="toclist-number">4.2.3.</span> <span class="toclist-text">Guided Attention</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#beam-search"><span class="toclist-number">4.2.4.</span> <span class="toclist-text">Beam Search</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#exposure-bias"><span class="toclist-number">4.2.5.</span> <span class="toclist-text">Exposure bias</span></a></li></ol></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-lect5-Transformer</a></h3></div><div class="post-content"><p>
 <h1 tabindex="-1"><span id="transformer-shi-shi-me">Transformer是什么</span><a href="#transformer-shi-shi-me" class="header-anchor">#</a></h1>
 <p>Transformer可以理解为是Sequence-to-sequence（简称Seq2seq）的模型，它接受向量序列作为输入，输出向量序列。</p>
 <img src="1673761113293.png" alt="1673761113293" style="zoom: 25%;">
