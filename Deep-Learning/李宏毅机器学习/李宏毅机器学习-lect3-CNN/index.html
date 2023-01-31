@@ -1,16 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><!-- hexo injector head_begin start --><link href="/css/hexo-widget-tree.css" rel="stylesheet"/><!-- hexo injector head_begin end --><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>李宏毅机器学习-lect3 CNN · 核子的Blog</title><meta name="description" content="CNN 的想法
-卷积层（Convolutional layers）
-卷积核
-步长 （Stride）
-填充 （Padding）
-参数共享（Parameter Sharing）
-卷积层的运行过程
-卷积层的两种理解方式
-
-
-池化层（Pooling layers）
-Flatten layers
-CNN 的缺"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><!-- hexo injector head_begin start --><link href="/css/hexo-widget-tree.css" rel="stylesheet"/><!-- hexo injector head_begin end --><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>李宏毅机器学习-lect3 CNN · 核子的Blog</title><meta name="description" content="“炼丹”的开始"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
@@ -123,43 +111,58 @@ mjx-container[display="true"] + br {
   display: none;
 }
 </style></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#cnn-de-xiang-fa"><span class="toclist-number">1.</span> <span class="toclist-text">CNN 的想法</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#juan-ji-ceng-convolutional-layers"><span class="toclist-number">2.</span> <span class="toclist-text">卷积层（Convolutional layers）</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#juan-ji-he"><span class="toclist-number">2.1.</span> <span class="toclist-text">卷积核</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#bu-chang-stride"><span class="toclist-number">2.2.</span> <span class="toclist-text">步长 （Stride）</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#tian-chong-padding"><span class="toclist-number">2.3.</span> <span class="toclist-text">填充 （Padding）</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#can-shu-gong-xiang-parameter-sharing"><span class="toclist-number">2.4.</span> <span class="toclist-text">参数共享（Parameter Sharing）</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#juan-ji-ceng-de-yun-xing-guo-cheng"><span class="toclist-number">2.5.</span> <span class="toclist-text">卷积层的运行过程</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#juan-ji-ceng-de-liang-chong-li-jie-fang-shi"><span class="toclist-number">2.6.</span> <span class="toclist-text">卷积层的两种理解方式</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#chi-hua-ceng-pooling-layers"><span class="toclist-number">3.</span> <span class="toclist-text">池化层（Pooling layers）</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#flatten-layers"><span class="toclist-number">4.</span> <span class="toclist-text">Flatten layers</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#cnn-de-que-dian"><span class="toclist-number">5.</span> <span class="toclist-text">CNN 的缺点</span></a></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-lect3 CNN</a></h3></div><div class="post-content"><p>
-
-<h1><span id="cnn-de-xiang-fa">CNN 的想法</span><a href="#cnn-de-xiang-fa" class="header-anchor">#</a></h1><blockquote>
-<p>对于图片分类的任务，我们可以采用让特征识别（这与人类分类物体的方法是类似的）的方法，让每一个神经元只与部分区域（Receptive field）关联，而不需要每一层都full connect。<br>所以，CNN是为了影像的特性而生的，把CNN用于影像领域外的任务要仔细思考是否出现影像类似的特性。</p>
+<h1 tabindex="-1"><span id="cnn-de-xiang-fa">CNN 的想法</span><a href="#cnn-de-xiang-fa" class="header-anchor">#</a></h1>
+<blockquote>
+<p>对于图片分类的任务，我们可以采用让特征识别（这与人类分类物体的方法是类似的）的方法，让每一个神经元只与部分区域（Receptive field）关联，而不需要每一层都full connect。<br>
+所以，CNN是为了影像的特性而生的，把CNN用于影像领域外的任务要仔细思考是否出现影像类似的特性。</p>
 </blockquote>
-<p><img src="1665018214006-8ad76eb1-0e0e-4c2d-bfbd-42d07ca50c76.png" alt="1665018214006-8ad76eb1-0e0e-4c2d-bfbd-42d07ca50c76" style="zoom:67%;"></p>
-<h1><span id="juan-ji-ceng-convolutional-layers">卷积层（Convolutional layers）</span><a href="#juan-ji-ceng-convolutional-layers" class="header-anchor">#</a></h1><h2><span id="juan-ji-he">卷积核</span><a href="#juan-ji-he" class="header-anchor">#</a></h2><p><strong>卷积核大小表示局部特征区域（即Receptive field）的大小</strong></p>
+<img src="1665018214006-8ad76eb1-0e0e-4c2d-bfbd-42d07ca50c76.png" alt="1665018214006-8ad76eb1-0e0e-4c2d-bfbd-42d07ca50c76" style="zoom:67%;">
+<h1 tabindex="-1"><span id="juan-ji-ceng-convolutional-layers">卷积层（Convolutional layers）</span><a href="#juan-ji-ceng-convolutional-layers" class="header-anchor">#</a></h1>
+<h2 tabindex="-1"><span id="juan-ji-he">卷积核</span><a href="#juan-ji-he" class="header-anchor">#</a></h2>
+<p><strong>卷积核大小表示局部特征区域（即Receptive field）的大小</strong></p>
 <p>卷积核<strong>一般大小取3x3</strong>，同时包含RGB三个通道</p>
 <p>Q：卷积核大小只有3x3，如果图片尺寸比较大，3x3会不会无法识别特征？</p>
 <p>这个问题将在下面回答</p>
-<p><img src="1665018118499-56892b1b-45f1-43cc-81b1-7a1b7198a3f8.png" alt="93604416650180402.png" style="zoom: 67%;"></p>
-<h2><span id="bu-chang-stride">步长 （Stride）</span><a href="#bu-chang-stride" class="header-anchor">#</a></h2><p>每次卷积核移动的长度，<strong>一般设为1或2</strong>，因为我们希望Receptive field之间是有重叠的，因为如果Receptive field之间完全没有重叠，那么如果pattern出现在两个Receptive field的交界上，特征就难以被识别。</p>
-<h2><span id="tian-chong-padding">填充 （Padding）</span><a href="#tian-chong-padding" class="header-anchor">#</a></h2><p>移动卷积核时，如果步长大于1，则移动时卷积核可能会超出图片范围，则需要在边上填充一些值，常见的方法有补0法、取平均法等。</p>
-<p><img src="1665018134783-948eb95d-cca5-43b4-ae33-e51b5ca65b88-16734106079208.png" alt="121803616650180702.png" style="zoom:67%;"></p>
-<h2><span id="can-shu-gong-xiang-parameter-sharing">参数共享（Parameter Sharing）</span><a href="#can-shu-gong-xiang-parameter-sharing" class="header-anchor">#</a></h2><blockquote>
+<img src="1665018118499-56892b1b-45f1-43cc-81b1-7a1b7198a3f8.png" alt="93604416650180402.png" style="zoom: 67%;">
+<h2 tabindex="-1"><span id="bu-chang-stride">步长 （Stride）</span><a href="#bu-chang-stride" class="header-anchor">#</a></h2>
+<p>每次卷积核移动的长度，<strong>一般设为1或2</strong>，因为我们希望Receptive field之间是有重叠的，因为如果Receptive field之间完全没有重叠，那么如果pattern出现在两个Receptive field的交界上，特征就难以被识别。</p>
+<h2 tabindex="-1"><span id="tian-chong-padding">填充 （Padding）</span><a href="#tian-chong-padding" class="header-anchor">#</a></h2>
+<p>移动卷积核时，如果步长大于1，则移动时卷积核可能会超出图片范围，则需要在边上填充一些值，常见的方法有补0法、取平均法等。</p>
+<img src="1665018134783-948eb95d-cca5-43b4-ae33-e51b5ca65b88-16734106079208.png" alt="121803616650180702.png" style="zoom:67%;">
+<h2 tabindex="-1"><span id="can-shu-gong-xiang-parameter-sharing">参数共享（Parameter Sharing）</span><a href="#can-shu-gong-xiang-parameter-sharing" class="header-anchor">#</a></h2>
+<blockquote>
 <p>对于一个特征，可能出现在图片不同的位置，而对于一个区域，有一组神经元负责，每个神经元负责识别不同的特征，所以此时可以让负责不同区域，但功能相同的神经元享有相同的参数，从而减少参数数量。</p>
+</blockquote>
+<blockquote>
 <p>对于每一个区域，有一组神经元负责，每个神经元有一组参数，这一组组参数叫做filter，所有区域共享一组filter</p>
 </blockquote>
-<h2><span id="juan-ji-ceng-de-yun-xing-guo-cheng">卷积层的运行过程</span><a href="#juan-ji-ceng-de-yun-xing-guo-cheng" class="header-anchor">#</a></h2><p>之前提到，图片中每一个小区域有一组神经元负责，每一个神经元的参数叫做filter，所有小区域共享一组filter，那么卷积层可以看作每一个filter对图像分别作用，得到一组图像，所有的filter对图像作用后，得到了新的图像，图像的channel数则为filter的数量。这样的一张图片叫做特征图像。</p>
-<p><img src="1665016186381-53474f12-2b21-4adc-b32a-bbd5828be04b-167341103121428.png" alt="197344716650160522.png" style="zoom:67%;"></p>
-<p><img src="1665016210455-2e51938b-a3c7-4faa-aee4-4b935b3616a1.png" alt="203954116650160332.png" style="zoom:67%;"></p>
+<h2 tabindex="-1"><span id="juan-ji-ceng-de-yun-xing-guo-cheng">卷积层的运行过程</span><a href="#juan-ji-ceng-de-yun-xing-guo-cheng" class="header-anchor">#</a></h2>
+<p>之前提到，图片中每一个小区域有一组神经元负责，每一个神经元的参数叫做filter，所有小区域共享一组filter，那么卷积层可以看作每一个filter对图像分别作用，得到一组图像，所有的filter对图像作用后，得到了新的图像，图像的channel数则为filter的数量。这样的一张图片叫做特征图像。</p>
+<img src="1665016186381-53474f12-2b21-4adc-b32a-bbd5828be04b-167341103121428.png" alt="197344716650160522.png" style="zoom:67%;">
+<img src="1665016210455-2e51938b-a3c7-4faa-aee4-4b935b3616a1.png" alt="203954116650160332.png" style="zoom:67%;">
 <p>所以一张图像经过卷积层后，会得到一张特征图像。之前有提到，卷积核大小只有3x3时会不会无法识别较大特征，这是不会的，因为在下一个卷积层中对特征图像做卷积时，若卷积核为3x3，步长为1时，则相当于对5x5大小区域卷积。</p>
-<p><img src="1665016474373-0a321b61-ca65-4d58-bdfe-dc3332ee97bc.png" alt="222773616650163802.png" style="zoom:67%;"></p>
-<h2><span id="juan-ji-ceng-de-liang-chong-li-jie-fang-shi">卷积层的两种理解方式</span><a href="#juan-ji-ceng-de-liang-chong-li-jie-fang-shi" class="header-anchor">#</a></h2><p><img src="1665016672370-d4141eb1-8013-4c7a-9f1f-5ca5c44bab06.png" alt="237383616648498492.png" style="zoom:67%;"></p>
-<h1><span id="chi-hua-ceng-pooling-layers">池化层（Pooling layers）</span><a href="#chi-hua-ceng-pooling-layers" class="header-anchor">#</a></h1><blockquote>
+<img src="1665016474373-0a321b61-ca65-4d58-bdfe-dc3332ee97bc.png" alt="222773616650163802.png" style="zoom:67%;">
+<h2 tabindex="-1"><span id="juan-ji-ceng-de-liang-chong-li-jie-fang-shi">卷积层的两种理解方式</span><a href="#juan-ji-ceng-de-liang-chong-li-jie-fang-shi" class="header-anchor">#</a></h2>
+<img src="1665016672370-d4141eb1-8013-4c7a-9f1f-5ca5c44bab06.png" alt="237383616648498492.png" style="zoom:67%;">
+<h1 tabindex="-1"><span id="chi-hua-ceng-pooling-layers">池化层（Pooling layers）</span><a href="#chi-hua-ceng-pooling-layers" class="header-anchor">#</a></h1>
+<blockquote>
 <p>对于一张较大的图片而言，采样时少采样一些点并不会影响图像是什么</p>
 </blockquote>
 <p>池化层并没有参数，其操作时固定的，相当于一个算符</p>
 <p>常用的池化方法有Max Pooling，过程如下图所示，一般而言，池化时分组大小为2x2</p>
-<p><img src="1665016965375-3ecb1787-d681-4361-9f65-cc415d327b52.png" alt="249661216650169072.png" style="zoom:67%;"></p>
-<p><img src="1665016978099-785f0fea-b999-4e9c-8e10-3e1215840f62-167341106637131.png" alt="250809316650169092.png" style="zoom:67%;"></p>
+<img src="1665016965375-3ecb1787-d681-4361-9f65-cc415d327b52.png" alt="249661216650169072.png" style="zoom:67%;">
+<img src="1665016978099-785f0fea-b999-4e9c-8e10-3e1215840f62-167341106637131.png" alt="250809316650169092.png" style="zoom:67%;">
 <p>一般而言，池化常常在卷积层后使用，如一个或两个卷积层后跟一个池化层，用于缩小图片，从而减小运算量。但是这对于网络的效果而言可能是由损害的，因为如果特征特别细小，则池化可能会漏过特征。</p>
-<h1><span id="flatten-layers">Flatten layers</span><a href="#flatten-layers" class="header-anchor">#</a></h1><p>图像经过一系列卷积、池化后，得到小的特征图像，此时这个特征图像代表图片中较大的、全局的特征，此时就可以把图像展平，然后通过全连接层，经过softmax归一化后，得出分类的结果。</p>
+<h1 tabindex="-1"><span id="flatten-layers">Flatten layers</span><a href="#flatten-layers" class="header-anchor">#</a></h1>
+<p>图像经过一系列卷积、池化后，得到小的特征图像，此时这个特征图像代表图片中较大的、全局的特征，此时就可以把图像展平，然后通过全连接层，经过softmax归一化后，得出分类的结果。</p>
 <p>其实到这里，和回归问题里用到的神经网络是类似的，只不过回归问题的特征是显式的，所以一开始就可能是全连接层，而影像类任务中，一开始需要先提取特征，最后再让特征经过全连接层计算。</p>
-<p><img src="1665017254080-ab97e69d-09d9-4ff1-8a86-77756d654d81.png" alt="267216616650172272.png" style="zoom:67%;"></p>
-<h1><span id="cnn-de-que-dian">CNN 的缺点</span><a href="#cnn-de-que-dian" class="header-anchor">#</a></h1><blockquote>
+<img src="1665017254080-ab97e69d-09d9-4ff1-8a86-77756d654d81.png" alt="267216616650172272.png" style="zoom:67%;">
+<h1 tabindex="-1"><span id="cnn-de-que-dian">CNN 的缺点</span><a href="#cnn-de-que-dian" class="header-anchor">#</a></h1>
+<blockquote>
 <p>CNN很难处理图片的缩放、旋转，所以我们需要数据增强（data augmentation）</p>
 </blockquote>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
 </p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-11</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Computer-Vision/" title="Computer Vision">Computer Vision </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><span class="leancloud_visitors"></span><span>大约1196个字, 3分钟59秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect3%20CNN%0Ahttp://hezj-opt.github.io/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect3-CNN/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%AD%E7%BB%83%E4%BC%9A%E5%A4%B1%E8%B4%A5/" title="李宏毅机器学习-为什么训练会失败">上一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
     clientID: '75fa8f8526b947111419',
     clientSecret: '28a1006aeebc5fe3d2e6d838846fa202d3362fd0',

@@ -1,14 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><!-- hexo injector head_begin start --><link href="/css/hexo-widget-tree.css" rel="stylesheet"/><!-- hexo injector head_begin end --><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>李宏毅机器学习-lect5 Transformer · 核子的Blog</title><meta name="description" content="Transformer是什么
-Transformer的应用
-Transformer的架构
-Encoder
-Decoder
-Autoregressive Transformer
-Masked Self-attention
-Cross attention
-
-
-Non autoregressive Tra"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><!-- hexo injector head_begin start --><link href="/css/hexo-widget-tree.css" rel="stylesheet"/><!-- hexo injector head_begin end --><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>李宏毅机器学习-lect5 Transformer · 核子的Blog</title><meta name="description" content="Attention is all you need!"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
@@ -121,59 +111,77 @@ mjx-container[display="true"] + br {
   display: none;
 }
 </style></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-shi-shi-me"><span class="toclist-number">1.</span> <span class="toclist-text">Transformer是什么</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-ying-yong"><span class="toclist-number">2.</span> <span class="toclist-text">Transformer的应用</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-jia-gou"><span class="toclist-number">3.</span> <span class="toclist-text">Transformer的架构</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#encoder"><span class="toclist-number">3.1.</span> <span class="toclist-text">Encoder</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#decoder"><span class="toclist-number">3.2.</span> <span class="toclist-text">Decoder</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#autoregressive-transformer"><span class="toclist-number">3.3.</span> <span class="toclist-text">Autoregressive Transformer</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#masked-self-attention"><span class="toclist-number">3.3.1.</span> <span class="toclist-text">Masked Self-attention</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#cross-attention"><span class="toclist-number">3.3.2.</span> <span class="toclist-text">Cross attention</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#non-autoregressive-transformer-nat"><span class="toclist-number">3.4.</span> <span class="toclist-text">Non autoregressive Transformer(NAT)</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-xun-lian"><span class="toclist-number">4.</span> <span class="toclist-text">Transformer的训练</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#loss-de-lai-yuan"><span class="toclist-number">4.1.</span> <span class="toclist-text">loss的来源</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#xun-lian-de-yi-xie-tips"><span class="toclist-number">4.2.</span> <span class="toclist-text">训练的一些tips</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#teacher-forcing"><span class="toclist-number">4.2.1.</span> <span class="toclist-text">Teacher Forcing</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#copy-mechanism"><span class="toclist-number">4.2.2.</span> <span class="toclist-text">Copy Mechanism</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#guided-attention"><span class="toclist-number">4.2.3.</span> <span class="toclist-text">Guided Attention</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#beam-search"><span class="toclist-number">4.2.4.</span> <span class="toclist-text">Beam Search</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#exposure-bias"><span class="toclist-number">4.2.5.</span> <span class="toclist-text">Exposure bias</span></a></li></ol></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-lect5 Transformer</a></h3></div><div class="post-content"><p>
-
-<h1><span id="transformer-shi-shi-me">Transformer是什么</span><a href="#transformer-shi-shi-me" class="header-anchor">#</a></h1><p>Transformer可以理解为是Sequence-to-sequence（简称Seq2seq）的模型，它接受向量序列作为输入，输出向量序列。</p>
-<p><img src="1673761113293.png" alt="1673761113293" style="zoom: 25%;"></p>
-<h1><span id="transformer-de-ying-yong">Transformer的应用</span><a href="#transformer-de-ying-yong" class="header-anchor">#</a></h1><p>Transformer的应用除了上图提到的<strong>语音识别、机器翻译、语音翻译</strong>以外，还有</p>
+<h1 tabindex="-1"><span id="transformer-shi-shi-me">Transformer是什么</span><a href="#transformer-shi-shi-me" class="header-anchor">#</a></h1>
+<p>Transformer可以理解为是Sequence-to-sequence（简称Seq2seq）的模型，它接受向量序列作为输入，输出向量序列。</p>
+<img src="1673761113293.png" alt="1673761113293" style="zoom: 25%;">
+<h1 tabindex="-1"><span id="transformer-de-ying-yong">Transformer的应用</span><a href="#transformer-de-ying-yong" class="header-anchor">#</a></h1>
+<p>Transformer的应用除了上图提到的<strong>语音识别、机器翻译、语音翻译</strong>以外，还有</p>
 <ul>
 <li>聊天机器人</li>
 <li>句子词性分析</li>
 <li>多标签分类</li>
 <li>物体检测</li>
 </ul>
-<h1><span id="transformer-de-jia-gou">Transformer的架构</span><a href="#transformer-de-jia-gou" class="header-anchor">#</a></h1><p>Transformer由编码器（Encoder）和解码器（Decoder）组成，前向传播的过程是Encoder将输入向量序列编码产生新的向量序列，然后Decoder将编码的向量结合begin向量（标记着位置，是一个one hot向量）产生第一个输出向量，然后把产生的第一个向量再输入Decoder，产生第二个向量，直到产生end向量为止，代表着输出完成。</p>
-<p><img src="1673761173543.png" alt="1673761173543" style="zoom:25%;"></p>
-<p>如下图所示，是”Attention is all you need”文中提出的Transformer的内部结构，左半边是Encoder，右半边是Decoder。接下来具体解释Encoder和Decoder的组成。</p>
-<p><img src="1673761173532.png" alt="1673761173532" style="zoom: 25%;"></p>
-<h2><span id="encoder">Encoder</span><a href="#encoder" class="header-anchor">#</a></h2><p>Encoder由一系列block组成，每一个block里面都包含了self-attention层和FC层。</p>
-<p><img src="1673761173605.png" alt="1673761173605" style="zoom:25%;"></p>
+<h1 tabindex="-1"><span id="transformer-de-jia-gou">Transformer的架构</span><a href="#transformer-de-jia-gou" class="header-anchor">#</a></h1>
+<p>Transformer由编码器（Encoder）和解码器（Decoder）组成，前向传播的过程是Encoder将输入向量序列编码产生新的向量序列，然后Decoder将编码的向量结合begin向量（标记着位置，是一个one hot向量）产生第一个输出向量，然后把产生的第一个向量再输入Decoder，产生第二个向量，直到产生end向量为止，代表着输出完成。</p>
+<img src="1673761173543.png" alt="1673761173543" style="zoom:25%;">
+<p>如下图所示，是"Attention is all you need"文中提出的Transformer的内部结构，左半边是Encoder，右半边是Decoder。接下来具体解释Encoder和Decoder的组成。</p>
+<img src="1673761173532.png" alt="1673761173532" style="zoom: 25%;">
+<h2 tabindex="-1"><span id="encoder">Encoder</span><a href="#encoder" class="header-anchor">#</a></h2>
+<p>Encoder由一系列block组成，每一个block里面都包含了self-attention层和FC层。</p>
+<img src="1673761173605.png" alt="1673761173605" style="zoom:25%;">
 <p>实际上，Transformer里融合了ResNet的思想，再self-attention产生了输出向量序列后，还会加上输入的向量，然后在一起进行layer normalization，就是对每一个向量，减掉其平均值后再除以标准差。进行了layer normalization后的向量才会被输入FC。</p>
 <p>如下图所示，FC的部分也有residual的部分，经过了FC、layer normalization后，才得到一个block的输出。</p>
-<p><img src="1673761173595.png" alt="1673761173595" style="zoom:25%;"></p>
+<img src="1673761173595.png" alt="1673761173595" style="zoom:25%;">
 <p>此时我们回顾Encoder的架构，首先对于Encoder中的一个block，要做的事情有</p>
 <ol>
 <li>Positional Encoding（位置编码，lect4的笔记里有提到）</li>
 <li>结合ResNet性质的Self-attention+layer normalization</li>
 <li>结合ResNet性质的FC+layer normalization</li>
 </ol>
-<p><img src="1673761113253.png" alt="1673761113253" style="zoom:25%;"></p>
-<h2><span id="decoder">Decoder</span><a href="#decoder" class="header-anchor">#</a></h2><h2><span id="autoregressive-transformer">Autoregressive Transformer</span><a href="#autoregressive-transformer" class="header-anchor">#</a></h2><p>Autoregressive transformer的前向传播过程大致是结合Encoder的输出和Begin向量得到第一个输出向量，以语言识别为例，然后取输出向量中对应概率最大的字对应的one hot向量作为第一位输出的结果，然后再用第一位输出的结果输入Decoder，产生下一个输出，直至产生End向量，才代表输出结束。</p>
-<p><img src="1673761173588.png" alt="1673761173588" style="zoom:18%;"></p>
-<p><img src="1673761173582.png" alt="1673761173582" style="zoom:18%;"></p>
+<img src="1673761113253.png" alt="1673761113253" style="zoom:25%;">
+<h2 tabindex="-1"><span id="decoder">Decoder</span><a href="#decoder" class="header-anchor">#</a></h2>
+<h2 tabindex="-1"><span id="autoregressive-transformer">Autoregressive Transformer</span><a href="#autoregressive-transformer" class="header-anchor">#</a></h2>
+<p>Autoregressive transformer的前向传播过程大致是结合Encoder的输出和Begin向量得到第一个输出向量，以语言识别为例，然后取输出向量中对应概率最大的字对应的one hot向量作为第一位输出的结果，然后再用第一位输出的结果输入Decoder，产生下一个输出，直至产生End向量，才代表输出结束。</p>
+<img src="1673761173588.png" alt="1673761173588" style="zoom:18%;">
+<img src="1673761173582.png" alt="1673761173582" style="zoom:18%;">
 <p>下图是Decoder的内部架构，Positional encoding和FC两个部分和Encoder是差不多的，所以下面重点分析Masked Attention部分和Masked Attention后的Attention block两个部分。</p>
-<p><img src="1673761173573.png" alt="1673761173573" style="zoom:25%;"></p>
-<h3><span id="masked-self-attention">Masked Self-attention</span><a href="#masked-self-attention" class="header-anchor">#</a></h3><p>Masked Self-attention和一般的Self-attention不同之处在于：产生第一个输出向量时，只能考虑第一个输入向量，产生第二个输入向量时，只能考虑第一、第二个输入向量，以此类推。下面两张图很好地解释了这个机制</p>
-<p><img src="1673761173562.png" alt="1673761173562" style="zoom:18%;"></p>
-<p><img src="1673761173555.png" alt="1673761173555" style="zoom:18%;"></p>
-<h3><span id="cross-attention">Cross attention</span><a href="#cross-attention" class="header-anchor">#</a></h3><p>这部分是Decoder内部架构图中第二个attention的模块，下图很好地说明了cross attention地机制。BEGIN向量和“机”向量进行Masked Self-attention，产生q向量，然后再同Encoder产生的输出得到attention score，再加权，通过FC layer得到第二个输出向量。</p>
+<img src="1673761173573.png" alt="1673761173573" style="zoom:25%;">
+<h3 tabindex="-1"><span id="masked-self-attention">Masked Self-attention</span><a href="#masked-self-attention" class="header-anchor">#</a></h3>
+<p>Masked Self-attention和一般的Self-attention不同之处在于：产生第一个输出向量时，只能考虑第一个输入向量，产生第二个输入向量时，只能考虑第一、第二个输入向量，以此类推。下面两张图很好地解释了这个机制</p>
+<img src="1673761173562.png" alt="1673761173562" style="zoom:18%;">
+<img src="1673761173555.png" alt="1673761173555" style="zoom:18%;">
+<h3 tabindex="-1"><span id="cross-attention">Cross attention</span><a href="#cross-attention" class="header-anchor">#</a></h3>
+<p>这部分是Decoder内部架构图中第二个attention的模块，下图很好地说明了cross attention地机制。BEGIN向量和“机”向量进行Masked Self-attention，产生q向量，然后再同Encoder产生的输出得到attention score，再加权，通过FC layer得到第二个输出向量。</p>
 <p>最重要的一点就是这个过程中的q向量不是来自于Encoder的输出，而是来自Mask Self-attention的输出。</p>
-<p><img src="1673761173525.png" alt="1673761173525" style="zoom:25%;"></p>
-<h2><span id="non-autoregressive-transformer-nat">Non autoregressive Transformer(NAT)</span><a href="#non-autoregressive-transformer-nat" class="header-anchor">#</a></h2><p>和autoregressive transformer（AT）不同，NAT一次性产生所有的输出向量，然后截取END向量之前的向量作为最后的输出序列。</p>
+<img src="1673761173525.png" alt="1673761173525" style="zoom:25%;">
+<h2 tabindex="-1"><span id="non-autoregressive-transformer-nat">Non autoregressive Transformer(NAT)</span><a href="#non-autoregressive-transformer-nat" class="header-anchor">#</a></h2>
+<p>和autoregressive transformer（AT）不同，NAT一次性产生所有的输出向量，然后截取END向量之前的向量作为最后的输出序列。</p>
 <p>相比AT，它的优势在于的产生速度快，并且可以控制输出长度，但是它的效果往往不如AT。</p>
-<p><img src="1673761173538.png" alt="1673761173538" style="zoom:25%;"></p>
-<h1><span id="transformer-de-xun-lian">Transformer的训练</span><a href="#transformer-de-xun-lian" class="header-anchor">#</a></h1><h2><span id="loss-de-lai-yuan">loss的来源</span><a href="#loss-de-lai-yuan" class="header-anchor">#</a></h2><p>loss的来源可以是每个输出的向量与正确向量的交叉熵，在训练时我们希望交叉熵最小化。</p>
-<p><img src="1673761173519-16737789244787.png" alt="1673761173519" style="zoom:25%;"></p>
-<h2><span id="xun-lian-de-yi-xie-tips">训练的一些tips</span><a href="#xun-lian-de-yi-xie-tips" class="header-anchor">#</a></h2><h3><span id="teacher-forcing">Teacher Forcing</span><a href="#teacher-forcing" class="header-anchor">#</a></h3><p>为了防止训练时出现因第一个向量输出错误导致接下来的训练错误这样“一步错，步步错”的情况，所以我们在训练时把正确答案输入给decoder。</p>
-<p><img src="1673761173519.png" alt="1673761173519" style="zoom:25%;"></p>
-<h3><span id="copy-mechanism">Copy Mechanism</span><a href="#copy-mechanism" class="header-anchor">#</a></h3><p>有时适当地从输入中进行一些copy，可以更好地完成任务。比如在聊天机器人训练中，可以对人名进行copy，因为一个人名在训练资料中出现的次数可能很少，网络无法通过学习习得输出正确人名的能力，所以对人名进行直接copy。</p>
-<p><img src="1673761173513.png" alt="1673761173513" style="zoom:25%;"></p>
-<h3><span id="guided-attention">Guided Attention</span><a href="#guided-attention" class="header-anchor">#</a></h3><p>Guided Attention，可以理解为用先验知识来限制self attention层的注意力机制，比如在语音识别中，一个音节的识别只与对应时刻的向量及其周边向量有关。所以应该把attention限制在这个时刻附近较小的范围内。</p>
-<p><img src="1673761173505.png" alt="1673761173505" style="zoom:25%;"></p>
-<h3><span id="beam-search">Beam Search</span><a href="#beam-search" class="header-anchor">#</a></h3><p>可以把找输出向量序列看作是树形搜索，所以就把问题看作是设计合适的搜索算法，使得全局的loss最小。</p>
-<p><img src="1673761173500.png" alt="1673761173500" style="zoom:25%;"></p>
-<h3><span id="exposure-bias">Exposure bias</span><a href="#exposure-bias" class="header-anchor">#</a></h3><p>训练时我们把正确答案直接喂给decoder，但是如果在测试的时候产生了错误的向量，可能就会产生mismatch，从而影响后面的输出。所以我们可以在训练时就适当地喂入错误的向量，使得模型的适应能力更强。</p>
-<p><img src="1673761173493.png" alt="1673761173493" style="zoom:25%;"></p>
-</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-14</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Transformer/" title="Transformer">Transformer </a><span class="leancloud_visitors"></span><span>大约1454个字, 4分钟50秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5%20Transformer%0Ahttp://hezj-opt.github.io/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/" title="记手搓ResNet的经历">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect4-Self-attention/" title="李宏毅机器学习-lect4 Self attention">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
+<img src="1673761173538.png" alt="1673761173538" style="zoom:25%;">
+<h1 tabindex="-1"><span id="transformer-de-xun-lian">Transformer的训练</span><a href="#transformer-de-xun-lian" class="header-anchor">#</a></h1>
+<h2 tabindex="-1"><span id="loss-de-lai-yuan">loss的来源</span><a href="#loss-de-lai-yuan" class="header-anchor">#</a></h2>
+<p>loss的来源可以是每个输出的向量与正确向量的交叉熵，在训练时我们希望交叉熵最小化。</p>
+<img src="1673761173519-16737789244787.png" alt="1673761173519" style="zoom:25%;">
+<h2 tabindex="-1"><span id="xun-lian-de-yi-xie-tips">训练的一些tips</span><a href="#xun-lian-de-yi-xie-tips" class="header-anchor">#</a></h2>
+<h3 tabindex="-1"><span id="teacher-forcing">Teacher Forcing</span><a href="#teacher-forcing" class="header-anchor">#</a></h3>
+<p>为了防止训练时出现因第一个向量输出错误导致接下来的训练错误这样“一步错，步步错”的情况，所以我们在训练时把正确答案输入给decoder。</p>
+<img src="1673761173519.png" alt="1673761173519" style="zoom:25%;">
+<h3 tabindex="-1"><span id="copy-mechanism">Copy Mechanism</span><a href="#copy-mechanism" class="header-anchor">#</a></h3>
+<p>有时适当地从输入中进行一些copy，可以更好地完成任务。比如在聊天机器人训练中，可以对人名进行copy，因为一个人名在训练资料中出现的次数可能很少，网络无法通过学习习得输出正确人名的能力，所以对人名进行直接copy。</p>
+<img src="1673761173513.png" alt="1673761173513" style="zoom:25%;">
+<h3 tabindex="-1"><span id="guided-attention">Guided Attention</span><a href="#guided-attention" class="header-anchor">#</a></h3>
+<p>Guided Attention，可以理解为用先验知识来限制self attention层的注意力机制，比如在语音识别中，一个音节的识别只与对应时刻的向量及其周边向量有关。所以应该把attention限制在这个时刻附近较小的范围内。</p>
+<img src="1673761173505.png" alt="1673761173505" style="zoom:25%;">
+<h3 tabindex="-1"><span id="beam-search">Beam Search</span><a href="#beam-search" class="header-anchor">#</a></h3>
+<p>可以把找输出向量序列看作是树形搜索，所以就把问题看作是设计合适的搜索算法，使得全局的loss最小。</p>
+<img src="1673761173500.png" alt="1673761173500" style="zoom:25%;">
+<h3 tabindex="-1"><span id="exposure-bias">Exposure bias</span><a href="#exposure-bias" class="header-anchor">#</a></h3>
+<p>训练时我们把正确答案直接喂给decoder，但是如果在测试的时候产生了错误的向量，可能就会产生mismatch，从而影响后面的输出。所以我们可以在训练时就适当地喂入错误的向量，使得模型的适应能力更强。</p>
+<img src="1673761173493.png" alt="1673761173493" style="zoom:25%;">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-14</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Transformer/" title="Transformer">Transformer </a><span class="leancloud_visitors"></span><span>大约1452个字, 4分钟50秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5%20Transformer%0Ahttp://hezj-opt.github.io/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/" title="记手搓ResNet的经历">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect4-Self-attention/" title="李宏毅机器学习-lect4 Self attention">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
     clientID: '75fa8f8526b947111419',
     clientSecret: '28a1006aeebc5fe3d2e6d838846fa202d3362fd0',
     repo: 'comments',      // The repository of store comments,
