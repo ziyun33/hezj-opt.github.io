@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><!-- hexo injector head_begin start --><link href="/css/hexo-widget-tree.css" rel="stylesheet"/><!-- hexo injector head_begin end --><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>李宏毅机器学习-lect13 Network Compression · 核子的Blog</title><meta name="description" content="为什么需要压缩模型
+Network Pruning
+
+Network Pruning的基本思想
+Weight Pruning
+Neuron Pruning
+Why Pruning？
+
+
+Knowledge Distillation
+Parameter Quantization
+Architectur"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#wei-shi-me-xu-yao-ya-suo-mo-xing"><span class="toclist-number">1.</span> <span class="toclist-text">为什么需要压缩模型</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#network-pruning"><span class="toclist-number">2.</span> <span class="toclist-text">Network Pruning</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#network-pruning-de-ji-ben-si-xiang"><span class="toclist-number">2.1.</span> <span class="toclist-text">Network Pruning的基本思想</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#weight-pruning"><span class="toclist-number">2.2.</span> <span class="toclist-text">Weight Pruning</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#neuron-pruning"><span class="toclist-number">2.3.</span> <span class="toclist-text">Neuron Pruning</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#why-pruning"><span class="toclist-number">2.4.</span> <span class="toclist-text">Why Pruning？</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#knowledge-distillation"><span class="toclist-number">3.</span> <span class="toclist-text">Knowledge Distillation</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#parameter-quantization"><span class="toclist-number">4.</span> <span class="toclist-text">Parameter Quantization</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#architecture-design"><span class="toclist-number">5.</span> <span class="toclist-text">Architecture Design</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#dynamic-computation"><span class="toclist-number">6.</span> <span class="toclist-text">Dynamic Computation</span></a></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-lect13 Network Compression</a></h3></div><div class="post-content"><p>
+<h1 tabindex="-1"><span id="wei-shi-me-xu-yao-ya-suo-mo-xing">为什么需要压缩模型</span><a href="#wei-shi-me-xu-yao-ya-suo-mo-xing" class="header-anchor">#</a></h1>
+<p>由于云端计算带来的延迟和隐私问题，有时我们需要把模型部署到运算资源有限的设备上（如手表、无人机、单片机等），那么此时需要对模型进行压缩，让模型用比较少的空间而保留原本的相似的性能。</p>
+<img src="image-20230208155305139.png" alt="image-20230208155305139" style="zoom:40%;">
+<h1 tabindex="-1"><span id="network-pruning">Network Pruning</span><a href="#network-pruning" class="header-anchor">#</a></h1>
+<h2 tabindex="-1"><span id="network-pruning-de-ji-ben-si-xiang">Network Pruning的基本思想</span><a href="#network-pruning-de-ji-ben-si-xiang" class="header-anchor">#</a></h2>
+<p>Network Pruning的方法是指删除掉模型的一些无关紧要的参数，然后再微调模型得到更小但效果接近的模型。每一次Pruning需要评估模型的各个参数的重要性（可以用绝对值，也可以用LLL中的方法衡量），然后移除不重要的参数，再进行微调。这个过程可以重复多次以获得足够小的模型。</p>
+<img src="image-20230208165432473.png" alt="image-20230208165432473" style="zoom:50%;">
+<h2 tabindex="-1"><span id="weight-pruning">Weight Pruning</span><a href="#weight-pruning" class="header-anchor">#</a></h2>
+<p>Weight Pruning是指删除掉模型部分神经元上的一些权重，实现参数的减少，但是这种方法会让模型变成不规则的模型。这不仅难以实现，修剪后的模型还难以用GPU加速运算。</p>
+<img src="image-20230208165552307.png" alt="image-20230208165552307" style="zoom:50%;">
+<h2 tabindex="-1"><span id="neuron-pruning">Neuron Pruning</span><a href="#neuron-pruning" class="header-anchor">#</a></h2>
+<p>Neuron Pruning的方法则是直接删除部分神经元，使得修建后的神经网络依然是规则的，这样比较容易实现，修剪的网络也便于用GPU加速。</p>
+<img src="image-20230208165759511.png" alt="image-20230208165759511" style="zoom:50%;">
+<h2 tabindex="-1"><span id="why-pruning">Why Pruning？</span><a href="#why-pruning" class="header-anchor">#</a></h2>
+<p>对于Pruning有效性的一种解释是“大乐透假说”（<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.03635">Lottery Ticket Hypothesis</a>）。这个假说认为可以把一个大的模型看成很多小模型的组合，如果有某一个小模型的参数的初始化是良好的，那么相当于“中奖”，此时大的模型也能很好地优化。</p>
+<img src="image-20230208165909065.png" alt="image-20230208165909065" style="zoom:50%;">
+<p>这个假说有一些实验进行验证：先把一个大的模型随机初始化，然后进行训练，将Pruning后的模型拿出，分别对其进行随机初始化和与初始化大模型时相同的初始化。发现随机初始化的小模型难以训练，但是用和大模型初始化相同的初始化则可以使得小模型很好地被优化。</p>
+<p>所以可以认为Pruning实际上是挑选出了“中奖”的小模型。</p>
+<img src="image-20230208165942869.png" alt="image-20230208165942869" style="zoom:50%;">
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.05270">https://arxiv.org/abs/1810.05270</a>中却报道了和大乐透假说相反的现象，下表中Scratch-E对应的一列是指把Pruning后的模型随机初始化的训练结果，而Scratch-B是在Scratch-E的基础上多训练几轮的结果，然后发现Scratch-B的结果可以优于Pruning后再微调的结果。</p>
+<p>所以这篇文章认为大乐透假说可能只在部分条件下成立，比如learning rate比较小，或是模型通过weight pruning得到。</p>
+<img src="image-20230208170112874.png" alt="image-20230208170112874" style="zoom:50%;">
+<h1 tabindex="-1"><span id="knowledge-distillation">Knowledge Distillation</span><a href="#knowledge-distillation" class="header-anchor">#</a></h1>
+<p>Knowledge Distillation，即知识蒸馏，这种方法是先训练一个比较大的teacher net，然后训练规模比较小的student net的产生和teacher net相近的输出。想法是直接让比较小的模型学习one hot vector的标准答案可能过于困难，所以只要求其输出接近teacher net，或许训练难度会比较低。</p>
+<img src="image-20230208165321130.png" alt="image-20230208165321130" style="zoom:50%;">
+<p>此外，为了进一步降低训练难度，有时还会将teacher net的softmax层输出中的<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq>改写为<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub><mi mathvariant="normal">/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">y_i/T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></eq>。这么做的意义是让teacher net中比较集中的输出变得比较平均，降低student net的训练难度。</p>
+<img src="image-20230208165259515.png" alt="image-20230208165259515" style="zoom:50%;">
+<h1 tabindex="-1"><span id="parameter-quantization">Parameter Quantization</span><a href="#parameter-quantization" class="header-anchor">#</a></h1>
+<p>Parameter Quantization的想法是用比较少的位数来存储一个值。</p>
+<p>第一种方法是Weight clustering，这个方法的想法是将模型中的weight进行聚类，将weight比较接近的部分归为一类，然后给每一类赋值（可以为这一类里所有weight的平均值）。然后可以用分类图+类与值的对应表的方式来储存模型中的所有参数。此外，还可以用Huffman Encoding或其他方法进一步减少存储参数所需空间。</p>
+<img src="image-20230208155514720.png" alt="image-20230208155514720" style="zoom:50%;">
+<p>第二种方法是将参数的位数减小，比如将64位浮点数改为8位，甚至整数，甚至只有1和-1两个值！</p>
+<img src="image-20230208165148634.png" alt="image-20230208165148634" style="zoom:50%;">
+<h1 tabindex="-1"><span id="architecture-design">Architecture Design</span><a href="#architecture-design" class="header-anchor">#</a></h1>
+<p>Architecture Design是通过设计神经网络的结构来减少模型参数的。</p>
+<p>以一般的CNN为例，如果输入、输出的feature map的channel数分别为2、4，卷积核大小为3x3，那么这个卷积层参数数为72。</p>
+<img src="image-20230208155652439.png" alt="image-20230208155652439" style="zoom:50%;">
+<p>但是如果我们将这个卷积层改为卷积核大小为3x3的Depth wise Convolution（channel数和输入feature map的channel数相同，每一个filter产生输出中的一个channel，这种卷积方式忽略了不同channel之间的关系），再让输出的feature map经过输出channel数为4的Pointwise Convolution（卷积核大小为1x1），最后输出的feature map大小是相同的，但是两个卷积层的参数和只有26。</p>
+<img src="image-20230208155717628.png" alt="image-20230208155717628" style="zoom:50%;">
+<p>对于输入、输出channel数为<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi></mrow><annotation encoding="application/x-tex">I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span></eq>、<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi></mrow><annotation encoding="application/x-tex">O</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span></span></span></span></eq>，卷积核大小为<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>×</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">k\times k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq>的卷积层，可以用参数数为<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>×</mo><mi>k</mi><mo>×</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">k\times k\times I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span></eq>的Depthwise Convolution和参数数为<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>×</mo><mi>O</mi></mrow><annotation encoding="application/x-tex">I\times O</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span></span></span></span></eq>的Pointwise Convolution近似。这样可以将参数数压缩至<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mrow><mi>k</mi><mo>×</mo><mi>k</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{k\times k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2484em;vertical-align:-0.4033em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">×</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4033em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></eq>（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi></mrow><annotation encoding="application/x-tex">O</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span></span></span></span></eq>一般比较大，可以忽略）。</p>
+<img src="image-20230208155757727.png" alt="image-20230208155757727" style="zoom:50%;">
+<p>这种方法的思想类似于矩阵分解，即下图中的<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>U</mi><mi>V</mi></mrow><annotation encoding="application/x-tex">W=UV</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span></eq>，但是这需要<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span></eq>的秩是小于<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span></eq>的，而对于一般的<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span></eq>没有这个限制。</p>
+<img src="image-20230208155859212.png" alt="image-20230208155859212" style="zoom:50%;">
+<h1 tabindex="-1"><span id="dynamic-computation">Dynamic Computation</span><a href="#dynamic-computation" class="header-anchor">#</a></h1>
+<p>我们还可以让模型根据实际情况动态地调整所用的模型的规模，就像可以有的手机可以通过电量自动调整屏幕亮度。</p>
+<p>比如我们可以让模型动态地调整模型地深度，以图像识别为例，这种方法在多个卷积层后都接入输出层，我们可以通过硬件的具体情况（如电量）调整所用的特征提取部分的深度。训练时我们只需要将所有输出层的loss相加得到<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span></eq>，然后优化模型使得<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span></eq>最低即可。</p>
+<img src="image-20230208171222054.png" alt="image-20230208171222054" style="zoom:50%;">
+<p>类似地，我们也可以调整使用的神经网络的宽度。同样地，训练时我们只需要将所有宽度的模型（并不是训练多个模型，只是有的模型只用完整模型的部分宽度）得到的loss相加得到<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span></eq>，然后优化模型使得<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span></eq>最低即可。</p>
+<img src="image-20230208171255367.png" alt="image-20230208171255367" style="zoom:50%;">
+<p>更进一步，我们甚至让模型根据输入的复杂程度来改变模型的深度。比如比较容易分类的图片，我们可以只用模型中的一小部分，对于复杂的图片，则用模型中比较多的layer甚至全部layer。</p>
+<img src="image-20230208171324673.png" alt="image-20230208171324673" style="zoom:50%;">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-02-08</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Network-Compression/" title="Network Compression">Network Compression </a><span class="leancloud_visitors"></span><span>大约1835个字, 6分钟7秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect13%20Network%20Compression%0Ahttp://hezj-opt.github.io/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect13-Network-Compression/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect15-Meta-Learning/" title="李宏毅机器学习-lect15 Meta Learning">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect14-Life-Long-Learning/" title="李宏毅机器学习-lect14 Life Long Learning">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
+    clientID: '75fa8f8526b947111419',
+    clientSecret: '28a1006aeebc5fe3d2e6d838846fa202d3362fd0',
+    repo: 'comments',      // The repository of store comments,
+    owner: 'hezj-opt',
+    admin: ['hezj-opt'],
+    id: '李宏毅机器学习-lect13 Network Compression',      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+})
+gitalk.render('gitalk_container')
+</script><div id="gitalk-container" style="padding-left: 50px;padding-right: 50px;padding-bottom: 70px"></div><script>var gitalk = new Gitalk({
+clientID: "",
+clientSecret: "",
+repo: "comments",
+owner: "hezj-opt",
+admin:  [""],
+id: md5(decodeURI(location.pathname)),      // Ensure uniqueness and length less than 50
+language: 'zh-CN' 
+})
+gitalk.render('gitalk-container')</script></div></div></div></div><script src="/js/darkLightToggle.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div><script src="/js/baidu-tongji.js"></script><!-- hexo injector body_end start --><script src="/js/hexo-widget-tree.js"></script><div id="widget-tree">
+      <ul>
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+          环境配置
+        </a>
+      <span class="tree-list-count">1</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/hexo%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/" title="hexo配置问题"><i class="post-icon gg-file-document"></i>hexo配置问题</a></li></ul></li>
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/Deep-Learning/">
+          Deep Learning
+        </a>
+      <span class="tree-list-count">17</span><ul class="tree-list-children">
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+          李宏毅机器学习
+        </a>
+      <span class="tree-list-count">16</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-Why-Deep-Learning/" title="李宏毅机器学习-Why Deep Learning?"><i class="post-icon gg-file-document"></i>李宏毅机器学习-Why Deep Learning?</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93/" title="李宏毅机器学习-hw3-CNN-总结"><i class="post-icon gg-file-document"></i>李宏毅机器学习-hw3-CNN-总结</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect4-Self-attention/" title="李宏毅机器学习-lect4 Self attention"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect4 Self attention</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect6-GAN/" title="李宏毅机器学习-lect6 GAN"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect6 GAN</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect3-CNN/" title="李宏毅机器学习-lect3 CNN"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect3 CNN</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer/" title="李宏毅机器学习-lect5 Transformer"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect5 Transformer</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect7-Self-Supervised-Learning/" title="李宏毅机器学习-lect7 Self-Supervised Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect7 Self-Supervised Learning</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%AD%E7%BB%83%E4%BC%9A%E5%A4%B1%E8%B4%A5/" title="李宏毅机器学习-为什么训练会失败"><i class="post-icon gg-file-document"></i>李宏毅机器学习-为什么训练会失败</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect8-Auto-encoder/" title="李宏毅机器学习-lect8 Auto-encoder"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect8 Auto-encoder</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect9-Explainable-ML/" title="李宏毅机器学习-lect9 Explainable ML"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect9 Explainable ML</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect11-Domain-Adaptation/" title="李宏毅机器学习-lect11 Domain Adaptation"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect11 Domain Adaptation</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect10-Adversarial-Attack/" title="李宏毅机器学习-lect10 Adversarial Attack"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect10 Adversarial Attack</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect12-Reinforcement-Learning/" title="李宏毅机器学习-lect12 Deep Reinforcement Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect12 Deep Reinforcement Learning</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect13-Network-Compression/" title="李宏毅机器学习-lect13 Network Compression"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect13 Network Compression</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect14-Life-Long-Learning/" title="李宏毅机器学习-lect14 Life Long Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect14 Life Long Learning</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect15-Meta-Learning/" title="李宏毅机器学习-lect15 Meta Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect15 Meta Learning</a></li></ul></li>
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/">
+          手搓记录
+        </a>
+      <span class="tree-list-count">1</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/" title="记手搓ResNet的经历"><i class="post-icon gg-file-document"></i>记手搓ResNet的经历</a></li></ul></li></ul></li></ul>
+        <div id="widget-tree-button">
+          <i class="gg-chevron-right"></i>
+        </div>
+      </div><!-- hexo injector body_end end --></body></html>
