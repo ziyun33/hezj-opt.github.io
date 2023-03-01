@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><!-- hexo injector head_begin start --><link href="/css/hexo-widget-tree.css" rel="stylesheet"/><!-- hexo injector head_begin end --><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>李宏毅机器学习-各式各样的注意力机制 · 核子的Blog</title><meta name="description" content="Transformer的局限
+Human Knowledge
+Local Attention / Truncated  Attention
+Stride Attention
+Global Attention
+
+
+Clustering
+Learnable Patterns
+Representative"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#transformer-de-ju-xian"><span class="toclist-number">1.</span> <span class="toclist-text">Transformer的局限</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#human-knowledge"><span class="toclist-number">2.</span> <span class="toclist-text">Human Knowledge</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#local-attention-truncated-attention"><span class="toclist-number">2.1.</span> <span class="toclist-text">Local Attention &#x2F; Truncated  Attention</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#stride-attention"><span class="toclist-number">2.2.</span> <span class="toclist-text">Stride Attention</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#global-attention"><span class="toclist-number">2.3.</span> <span class="toclist-text">Global Attention</span></a></li></ol></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#clustering"><span class="toclist-number">3.</span> <span class="toclist-text">Clustering</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#learnable-patterns"><span class="toclist-number">4.</span> <span class="toclist-text">Learnable Patterns</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#representative-key"><span class="toclist-number">5.</span> <span class="toclist-text">Representative key</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#k-q-first-v-k-first"><span class="toclist-number">6.</span> <span class="toclist-text">k,q first → v,k first</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#new-framework"><span class="toclist-number">7.</span> <span class="toclist-text">New framework</span></a></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>李宏毅机器学习-各式各样的注意力机制</a></h3></div><div class="post-content"><p>
+
+<p><em>目前里面提到的很多东西我自己也不太懂，不过先记下来，用到的时候也知道去哪找。</em></p>
+<p><img src="image-20230301133511944.png" alt="image-20230301133511944" style="zoom:60%;"></p>
+<p>注：</p>
+<ul>
+<li>横轴：运行速度</li>
+<li>纵轴：表现</li>
+<li>圆圈大小：内存占用</li>
+</ul>
+<h1><span id="transformer-de-ju-xian">Transformer的局限</span><a href="#transformer-de-ju-xian" class="header-anchor">#</a></h1><p>Transformer的一大局限是其运算效率，对于有N个vector的序列，由于每个query都需要和key作点积，那么就需要做<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="3.119ex" height="1.887ex" role="img" focusable="false" viewbox="0 -833.9 1378.8 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mi"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"/></g><g data-mml-node="mn" transform="translate(975.3,363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"/></g></g></g></g></svg></mjx-container>次点积，如果序列非常长，那么运算成本可能是无法承受的。例如图像任务中，当图片中的每个pixel被看作向量，256x256大小的图片在一个self-attention层上的点积次数是<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="4.381ex" height="2.022ex" role="img" focusable="false" viewbox="0 -871.8 1936.6 893.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"/><path data-c="35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z" transform="translate(500,0)"/><path data-c="36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z" transform="translate(1000,0)"/></g><g data-mml-node="mn" transform="translate(1533,393.1) scale(0.707)"><path data-c="34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"/></g></g></g></g></svg></mjx-container>。</p>
+<p><img src="image-20230228164413055.png" alt="image-20230228164413055" style="zoom: 60%;"></p>
+<h1><span id="human-knowledge">Human Knowledge</span><a href="#human-knowledge" class="header-anchor">#</a></h1><h2><span id="local-attention-truncated-attention">Local Attention / Truncated  Attention</span><a href="#local-attention-truncated-attention" class="header-anchor">#</a></h2><p>在一些问题中，一个vector只需要把注意力放在临近的vector上，那么就可以使用Local Attention / Truncated  Attention，只计算attention matrix中对角线临近区域的部分，其他设为0。这样的操作其实和CNN是类似的。</p>
+<p><img src="image-20230228171451274.png" alt="image-20230228171451274" style="zoom: 60%;"></p>
+<h2><span id="stride-attention">Stride Attention</span><a href="#stride-attention" class="header-anchor">#</a></h2><p>如下图所示，每一个vector只关注与其一定间隔的向量，这个间隔是一个超参数。</p>
+<p><img src="image-20230228172619577.png" alt="image-20230228172619577" style="zoom:60%;"></p>
+<h2><span id="global-attention">Global Attention</span><a href="#global-attention" class="header-anchor">#</a></h2><p>Global attention是取出special token，然后用special token作为query、key和所有token计算attention。</p>
+<p><img src="image-20230228172727955.png" alt="image-20230228172727955" style="zoom:60%;"></p>
+<p>实际上我们有时会采用多种注意力机制进行结合，如下图所示。</p>
+<p><img src="image-20230228172922846.png" alt="image-20230228172922846" style="zoom:60%;"></p>
+<h1><span id="clustering">Clustering</span><a href="#clustering" class="header-anchor">#</a></h1><p>Clustering方法是指把query和key进行聚类，然后只计算相近的query和key之间的attention，而差距较大的query和key之间的attention score被设置为0。</p>
+<p><img src="image-20230301132812960.png" alt="image-20230301132812960" style="zoom:60%;"></p>
+<p><img src="image-20230301132908158.png" alt="image-20230301132908158" style="zoom:60%;"></p>
+<h1><span id="learnable-patterns">Learnable Patterns</span><a href="#learnable-patterns" class="header-anchor">#</a></h1><p>在之前的方法中，我们还是依赖人对于问题的理解去判定哪些attention score是需要计算的，但是其实可以让模型自己学习出哪些attention score是需要计算的。</p>
+<p><img src="image-20230301144917415.png" alt="image-20230301144917415" style="zoom:60%;"></p>
+<h1><span id="representative-key">Representative key</span><a href="#representative-key" class="header-anchor">#</a></h1><p>因为attention map通常是低秩的，所以可以用有代表性的向量代表V、K（低秩近似），以减少运算量。</p>
+<p><img src="image-20230301133049522.png" alt="image-20230301133049522" style="zoom:60%;"></p>
+<p><img src="image-20230301133117076.png" alt="image-20230301133117076" style="zoom:60%;"></p>
+<h1><span id="k-q-first-v-k-first">k,q first → v,k first</span><a href="#k-q-first-v-k-first" class="header-anchor">#</a></h1><p>先计算value和key的积可以使得运算量降低，从而加速transformer运算。</p>
+<p><img src="image-20230301133222135.png" alt="image-20230301133222135" style="zoom:60%;"></p>
+<p>对于不同的query，value和key的积是相同的，所以可以把<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="6.817ex" height="1.954ex" role="img" focusable="false" viewbox="0 -841.7 3013.2 863.7"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D449" d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"/></g><g data-mml-node="mo" transform="translate(991.2,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"/></g><g data-mml-node="msup" transform="translate(1491.4,0)"><g data-mml-node="mi"><path data-c="1D43E" d="M285 628Q285 635 228 637Q205 637 198 638T191 647Q191 649 193 661Q199 681 203 682Q205 683 214 683H219Q260 681 355 681Q389 681 418 681T463 682T483 682Q500 682 500 674Q500 669 497 660Q496 658 496 654T495 648T493 644T490 641T486 639T479 638T470 637T456 637Q416 636 405 634T387 623L306 305Q307 305 490 449T678 597Q692 611 692 620Q692 635 667 637Q651 637 651 648Q651 650 654 662T659 677Q662 682 676 682Q680 682 711 681T791 680Q814 680 839 681T869 682Q889 682 889 672Q889 650 881 642Q878 637 862 637Q787 632 726 586Q710 576 656 534T556 455L509 418L518 396Q527 374 546 329T581 244Q656 67 661 61Q663 59 666 57Q680 47 717 46H738Q744 38 744 37T741 19Q737 6 731 0H720Q680 3 625 3Q503 3 488 0H478Q472 6 472 9T474 27Q478 40 480 43T491 46H494Q544 46 544 71Q544 75 517 141T485 216L427 354L359 301L291 248L268 155Q245 63 245 58Q245 51 253 49T303 46H334Q340 37 340 35Q340 19 333 5Q328 0 317 0Q314 0 280 1T180 2Q118 2 85 2T49 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Z"/></g><g data-mml-node="mi" transform="translate(974,363) scale(0.707)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"/></g></g></g></g></svg></mjx-container>先算出来（有点像一个模板），从而减少重复运算。</p>
+<p><img src="image-20230301134918742.png" alt="image-20230301134918742" style="zoom:60%;"></p>
+<p><img src="image-20230301135059486.png" alt="image-20230301135059486" style="zoom:60%;"></p>
+<h1><span id="new-framework">New framework</span><a href="#new-framework" class="header-anchor">#</a></h1><p><img src="image-20230301134644083.png" alt="image-20230301134644083" style="zoom:60%;"></p>
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-02-28</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Self-attention/" title="Self attention">Self attention </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Transformer/" title="Transformer">Transformer </a><span class="leancloud_visitors"></span><span>大约615个字, 2分钟2秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%90%84%E5%BC%8F%E5%90%84%E6%A0%B7%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%0Ahttp://hezj-opt.github.io/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%90%84%E5%BC%8F%E5%90%84%E6%A0%B7%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect15-Meta-Learning/" title="李宏毅机器学习-lect15 Meta Learning">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
+    clientID: '75fa8f8526b947111419',
+    clientSecret: '28a1006aeebc5fe3d2e6d838846fa202d3362fd0',
+    repo: 'comments',      // The repository of store comments,
+    owner: 'hezj-opt',
+    admin: ['hezj-opt'],
+    id: '李宏毅机器学习-各式各样的注意力机制',      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+})
+gitalk.render('gitalk_container')
+</script><div id="gitalk-container" style="padding-left: 50px;padding-right: 50px;padding-bottom: 70px"></div><script>var gitalk = new Gitalk({
+clientID: "",
+clientSecret: "",
+repo: "comments",
+owner: "hezj-opt",
+admin:  [""],
+id: md5(decodeURI(location.pathname)),      // Ensure uniqueness and length less than 50
+language: 'zh-CN' 
+})
+gitalk.render('gitalk-container')</script></div></div></div></div><script src="/js/darkLightToggle.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div><script src="/js/baidu-tongji.js"></script><!-- hexo injector body_end start --><script src="/js/hexo-widget-tree.js"></script><div id="widget-tree">
+      <ul>
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+          环境配置
+        </a>
+      <span class="tree-list-count">1</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/hexo%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/" title="hexo配置问题"><i class="post-icon gg-file-document"></i>hexo配置问题</a></li></ul></li>
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/Deep-Learning/">
+          Deep Learning
+        </a>
+      <span class="tree-list-count">18</span><ul class="tree-list-children">
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+          李宏毅机器学习
+        </a>
+      <span class="tree-list-count">17</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-Why-Deep-Learning/" title="李宏毅机器学习-Why Deep Learning?"><i class="post-icon gg-file-document"></i>李宏毅机器学习-Why Deep Learning?</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93/" title="李宏毅机器学习-hw3-CNN-总结"><i class="post-icon gg-file-document"></i>李宏毅机器学习-hw3-CNN-总结</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect4-Self-attention/" title="李宏毅机器学习-lect4 Self attention"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect4 Self attention</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect6-GAN/" title="李宏毅机器学习-lect6 GAN"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect6 GAN</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect3-CNN/" title="李宏毅机器学习-lect3 CNN"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect3 CNN</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect5-Transformer/" title="李宏毅机器学习-lect5 Transformer"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect5 Transformer</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect7-Self-Supervised-Learning/" title="李宏毅机器学习-lect7 Self-Supervised Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect7 Self-Supervised Learning</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%AD%E7%BB%83%E4%BC%9A%E5%A4%B1%E8%B4%A5/" title="李宏毅机器学习-为什么训练会失败"><i class="post-icon gg-file-document"></i>李宏毅机器学习-为什么训练会失败</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect8-Auto-encoder/" title="李宏毅机器学习-lect8 Auto-encoder"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect8 Auto-encoder</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect9-Explainable-ML/" title="李宏毅机器学习-lect9 Explainable ML"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect9 Explainable ML</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect11-Domain-Adaptation/" title="李宏毅机器学习-lect11 Domain Adaptation"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect11 Domain Adaptation</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect10-Adversarial-Attack/" title="李宏毅机器学习-lect10 Adversarial Attack"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect10 Adversarial Attack</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect12-Reinforcement-Learning/" title="李宏毅机器学习-lect12 Deep Reinforcement Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect12 Deep Reinforcement Learning</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect13-Network-Compression/" title="李宏毅机器学习-lect13 Network Compression"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect13 Network Compression</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect14-Life-Long-Learning/" title="李宏毅机器学习-lect14 Life Long Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect14 Life Long Learning</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect15-Meta-Learning/" title="李宏毅机器学习-lect15 Meta Learning"><i class="post-icon gg-file-document"></i>李宏毅机器学习-lect15 Meta Learning</a></li><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%90%84%E5%BC%8F%E5%90%84%E6%A0%B7%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="李宏毅机器学习-各式各样的注意力机制"><i class="post-icon gg-file-document"></i>李宏毅机器学习-各式各样的注意力机制</a></li></ul></li>
+      <li class="tree-list-item">
+        <i class="toggle-post-icon gg-folder-add"></i>
+        <a class="tree-list-link" href="/categories/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/">
+          手搓记录
+        </a>
+      <span class="tree-list-count">1</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/" title="记手搓ResNet的经历"><i class="post-icon gg-file-document"></i>记手搓ResNet的经历</a></li></ul></li></ul></li></ul>
+        <div id="widget-tree-button">
+          <i class="gg-chevron-right"></i>
+        </div>
+      </div><!-- hexo injector body_end end --></body></html>
