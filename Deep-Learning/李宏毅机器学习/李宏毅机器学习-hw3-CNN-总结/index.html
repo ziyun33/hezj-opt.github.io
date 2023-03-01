@@ -192,60 +192,6 @@ mjx-container[display="true"] + br {
         <td>使用tta</td>
     </tr>
 </table>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Times</th>
-<th style="text-align:center">private score</th>
-<th style="text-align:center">public score</th>
-<th style="text-align:center">Improvement（相比前一步）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0.57063</td>
-<td style="text-align:center">0.55278</td>
-<td style="text-align:center">直接运行初始代码</td>
-</tr>
-<tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center">0.71830</td>
-<td style="text-align:center">0.75298</td>
-<td style="text-align:center">数据增强、调整模型、调整loss function</td>
-</tr>
-<tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center">0.75757</td>
-<td style="text-align:center">0.78884</td>
-<td style="text-align:center">调整数据增强、手搓ResNet、loss function调参</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">0.77592</td>
-<td style="text-align:center">0.80378</td>
-<td style="text-align:center">减少ResNet层数、调整learning rate</td>
-</tr>
-<tr>
-<td style="text-align:center">5</td>
-<td style="text-align:center">0.77251</td>
-<td style="text-align:center">0.80677</td>
-<td style="text-align:center">减少ResNet层数</td>
-</tr>
-<tr>
-<td style="text-align:center">6</td>
-<td style="text-align:center">0.82415</td>
-<td style="text-align:center">0.85358</td>
-<td style="text-align:center">增加ResNet层数</td>
-</tr>
-<tr>
-<td style="text-align:center">7</td>
-<td style="text-align:center">0.84208</td>
-<td style="text-align:center">0.87450</td>
-<td style="text-align:center">使用tta</td>
-</tr>
-</tbody>
-</table>
 <h1 tabindex="-1"><span id="xun-lian-fang-fa">训练方法</span><a href="#xun-lian-fang-fa" class="header-anchor">#</a></h1>
 <h2 tabindex="-1"><span id="data-augmentation">Data augmentation</span><a href="#data-augmentation" class="header-anchor">#</a></h2>
 <p>在观察了部分数据之后，发现合理的图片增强方式包括但不限于</p>
@@ -320,7 +266,7 @@ mjx-container[display="true"] + br {
 <p><img src="Grad_resblocks.0.0.res_function.1.weight.png" alt="Grad_resblocks.0.0.res_function.1.weight"></p>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
-</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-18</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Computer-Vision/" title="Computer Vision">Computer Vision </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><i class="fa fa-tag"></i><a class="tag" href="/tags/ResNet/" title="ResNet">ResNet </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Learning-rate优化/" title="Learning rate优化">Learning rate优化 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Test-time-augmentation/" title="Test time augmentation">Test time augmentation </a><span class="leancloud_visitors"></span><span>大约2118个字, 7分钟3秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93%0Ahttp://hezj-opt.github.io/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect6-GAN/" title="李宏毅机器学习-lect6 GAN">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/" title="记手搓ResNet的经历">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-18</span><a class="tag" href="/categories/Deep-Learning/" title="Deep Learning">Deep Learning </a><a class="tag" href="/categories/Deep-Learning/李宏毅机器学习/" title="李宏毅机器学习">李宏毅机器学习 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Deep-Learning/" title="Deep Learning">Deep Learning </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Computer-Vision/" title="Computer Vision">Computer Vision </a><i class="fa fa-tag"></i><a class="tag" href="/tags/CNN/" title="CNN">CNN </a><i class="fa fa-tag"></i><a class="tag" href="/tags/ResNet/" title="ResNet">ResNet </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Learning-rate优化/" title="Learning rate优化">Learning rate优化 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Test-time-augmentation/" title="Test time augmentation">Test time augmentation </a><span class="leancloud_visitors"></span><span>大约2045个字, 6分钟49秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93%0Ahttp://hezj-opt.github.io/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-hw3-CNN-%E6%80%BB%E7%BB%93/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-lect6-GAN/" title="李宏毅机器学习-lect6 GAN">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%89%8B%E6%90%93%E8%AE%B0%E5%BD%95/%E8%AE%B0%E6%89%8B%E6%90%93ResNet%E7%9A%84%E7%BB%8F%E5%8E%86/" title="记手搓ResNet的经历">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
     clientID: '75fa8f8526b947111419',
     clientSecret: '28a1006aeebc5fe3d2e6d838846fa202d3362fd0',
     repo: 'comments',      // The repository of store comments,
@@ -376,7 +322,7 @@ gitalk.render('gitalk-container')</script></div></div></div></div><script src="/
         <a class="tree-list-link" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%8E%8B%E7%BC%A9%E6%84%9F%E7%9F%A5%E6%88%90%E5%83%8F/">
           压缩感知成像
         </a>
-      <span class="tree-list-count">1</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%8E%8B%E7%BC%A9%E6%84%9F%E7%9F%A5%E6%88%90%E5%83%8F/%E5%8E%8B%E7%BC%A9%E6%84%9F%E7%9F%A5%E6%88%90%E5%83%8F%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/" title="压缩感知成像论文阅读记录"><i class="post-icon gg-file-document"></i>压缩感知成像论文阅读记录</a></li></ul></li></ul></li></ul>
+      <span class="tree-list-count">1</span><ul class="tree-list-children"><li class="tree-list-item"><a class="tree-list-post-link" href="/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%8E%8B%E7%BC%A9%E6%84%9F%E7%9F%A5%E6%88%90%E5%83%8F/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%8E%8B%E7%BC%A9%E6%84%9F%E7%9F%A5%E6%88%90%E5%83%8F/%E5%8E%8B%E7%BC%A9%E6%84%9F%E7%9F%A5%E6%88%90%E5%83%8F%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/" title="压缩感知成像论文阅读记录"><i class="post-icon gg-file-document"></i>压缩感知成像论文阅读记录</a></li></ul></li></ul></li></ul>
         <div id="widget-tree-button">
           <i class="gg-chevron-right"></i>
         </div>
