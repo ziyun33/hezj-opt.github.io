@@ -1,7 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN" id="theme-light-mode"><head><!-- hexo injector head_begin start --><link href="/css/hexo-widget-tree.css" rel="stylesheet"/><!-- hexo injector head_begin end --><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="核子"><title>快照压缩成像论文阅读记录 · 核子的Blog</title><meta name="description" content="综合
 成像系统
 算法
-
 综述
 End2End
 Deep unfolding
@@ -12,13 +11,13 @@ Untrained NN
 
 
 
+
 开个文档push自己读文章……
 综合#
-
 Snapshot Compressive Imaging: Theory, Algorithms, and Applications
 
 
-"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+首"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/mylogo.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
@@ -131,9 +130,9 @@ mjx-container[display="true"] + br {
   display: none;
 }
 </style></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/categories">分类</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/mylogo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/mylogo.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">核子的Blog</a></h3><div class="description"><p>A simple blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/hezj-opt"><i class="fa fa-github"></i></a></li><li><a href="mailto:zijun_he@zju.edu.cn"><i class="fa fa-envelope"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#zong-he"><span class="toclist-number">1.</span> <span class="toclist-text">综合</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#cheng-xiang-xi-tong"><span class="toclist-number">2.</span> <span class="toclist-text">成像系统</span></a></li><li class="toclist-item toclist-level-1"><a class="toclist-link" href="#suan-fa"><span class="toclist-number">3.</span> <span class="toclist-text">算法</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#zong-shu"><span class="toclist-number">3.1.</span> <span class="toclist-text">综述</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#end2end"><span class="toclist-number">3.2.</span> <span class="toclist-text">End2End</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#deep-unfolding"><span class="toclist-number">3.3.</span> <span class="toclist-text">Deep unfolding</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#pnp"><span class="toclist-number">3.4.</span> <span class="toclist-text">PnP</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#untrained-nn"><span class="toclist-number">3.5.</span> <span class="toclist-text">Untrained NN</span></a></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> 核子</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>快照压缩成像论文阅读记录</a></h3></div><div class="post-content"><p>
+
 <p>开个文档push自己读文章……</p>
-<h1 tabindex="-1"><span id="zong-he">综合</span><a href="#zong-he" class="header-anchor">#</a></h1>
-<blockquote>
+<h1><span id="zong-he">综合</span><a href="#zong-he" class="header-anchor">#</a></h1><blockquote>
 <p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/9363502">Snapshot Compressive Imaging: Theory, Algorithms, and Applications</a></p>
 </blockquote>
 <ul>
@@ -141,96 +140,97 @@ mjx-container[display="true"] + br {
 <li>主要内容：系统性回顾了2021年之前的快照压缩成像的<strong>硬件系统、数学模型、理论、算法</strong></li>
 <li>详细笔记：TBA</li>
 </ul>
-<h1 tabindex="-1"><span id="cheng-xiang-xi-tong">成像系统</span><a href="#cheng-xiang-xi-tong" class="header-anchor">#</a></h1>
-<p>To Be Add</p>
-<h1 tabindex="-1"><span id="suan-fa">算法</span><a href="#suan-fa" class="header-anchor">#</a></h1>
-<h2 tabindex="-1"><span id="zong-shu">综述</span><a href="#zong-shu" class="header-anchor">#</a></h2>
-<blockquote>
+<h1><span id="cheng-xiang-xi-tong">成像系统</span><a href="#cheng-xiang-xi-tong" class="header-anchor">#</a></h1><p>To Be Add</p>
+<h1><span id="suan-fa">算法</span><a href="#suan-fa" class="header-anchor">#</a></h1><h2><span id="zong-shu">综述</span><a href="#zong-shu" class="header-anchor">#</a></h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12317/2641748/Recent-advances-of-deep-learning-for-spectral-snapshot-compressive-imaging/10.1117/12.2641748.short?SSO=1">Recent advances of deep learning for spectral snapshot compressive imaging </a></p>
 </blockquote>
 <ul>
-<li>
-<p>首次阅读时间：2023.2.11</p>
-</li>
-<li>
-<p>主要内容：回顾了2023年之前的光谱快照压缩成像算法（基于deep learning）</p>
-</li>
-<li>
-<p>重点</p>
+<li>首次阅读时间：2023.2.11</li>
+<li>主要内容：回顾了2023年之前的光谱快照压缩成像算法（基于deep learning）</li>
+<li><p>重点</p>
 <ul>
 <li>深度先验+PnP是值得关注的方向</li>
 <li>Transformer在光谱快照压缩成像中开始发挥其优势</li>
 </ul>
 </li>
 </ul>
-<h2 tabindex="-1"><span id="end2end">End2End</span><a href="#end2end" class="header-anchor">#</a></h2>
-<blockquote>
+<h2><span id="end2end">End2End</span><a href="#end2end" class="header-anchor">#</a></h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2022/html/Cai_Mask-Guided_Spectral-Wise_Transformer_for_Efficient_Hyperspectral_Image_Reconstruction_CVPR_2022_paper.html">Mask-Guided Spectral-Wise Transformer for Efficient Hyperspectral Image Reconstruction</a></p>
 </blockquote>
 <ul>
-<li>
-<p>首次阅读时间：2023.2.14</p>
-</li>
-<li>
-<p>创新点：</p>
+<li>首次阅读时间：2023.2.14</li>
+<li><p>创新点：</p>
 <ul>
 <li><strong>首次将Transformer用于光谱SCI</strong></li>
 <li><strong>光谱注意力机制</strong>（S-MSA，将各波长的二维图拉伸得到的向量看作token）</li>
 <li><strong>掩膜引导机制</strong>（使得S-MSA模块关注具有光谱图像中高保真度的区域）</li>
 </ul>
-<img src="image-20230302012515320.png" alt="image-20230302012515320" style="zoom:50%;">
+<p><img src="image-20230302012515320.png" alt="image-20230302012515320" style="zoom:50%;"></p>
 </li>
 </ul>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://link.springer.com/chapter/10.1007/978-3-031-19790-1_41">Coarse-to-Fine Sparse Transformer for Hyperspectral Image Reconstruction</a></p>
 </blockquote>
 <ul>
-<li>
-<p>首次阅读时间：2023.2.27</p>
-</li>
-<li>
-<p>创新点：</p>
+<li>首次阅读时间：2023.2.27</li>
+<li><p>创新点：</p>
 <ul>
 <li><strong>SASM</strong>（光谱感知筛选机制，a图）：让模型关注信息丰富的区域（轻微降低性能但大大提高计算效率）</li>
 <li><strong>SAH-MSA</strong>（光谱聚合散列自注意力机制，c图）：通过hashing，把每个patch中强相关的token归为一组，在组内进行self-attention。</li>
 </ul>
-<img src="image-20230302012907642.png" alt="image-20230302012907642" style="zoom:50%;">
+<p><img src="image-20230302012907642.png" alt="image-20230302012907642" style="zoom:50%;"></p>
 </li>
 </ul>
-<h2 tabindex="-1"><span id="deep-unfolding">Deep unfolding</span><a href="#deep-unfolding" class="header-anchor">#</a></h2>
 <blockquote>
+<p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/9741335">Recurrent Neural Networks for Snapshot Compressive Imaging</a></p>
+</blockquote>
+<ul>
+<li><p>首次阅读时间：2023.4.1</p>
+</li>
+<li><p>创新点：</p>
+<ul>
+<li>提出了通过measurement和mask生成每一帧的平均测量值<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.726ex" height="2.113ex" role="img" focusable="false" viewbox="0 -934 763 934"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mover"><g data-mml-node="mi"><path data-c="1D44C" d="M66 637Q54 637 49 637T39 638T32 641T30 647T33 664T42 682Q44 683 56 683Q104 680 165 680Q288 680 306 683H316Q322 677 322 674T320 656Q316 643 310 637H298Q242 637 242 624Q242 619 292 477T343 333L346 336Q350 340 358 349T379 373T411 410T454 461Q546 568 561 587T577 618Q577 634 545 637Q528 637 528 647Q528 649 530 661Q533 676 535 679T549 683Q551 683 578 682T657 680Q684 680 713 681T746 682Q763 682 763 673Q763 669 760 657T755 643Q753 637 734 637Q662 632 617 587Q608 578 477 424L348 273L322 169Q295 62 295 57Q295 46 363 46Q379 46 384 45T390 35Q390 33 388 23Q384 6 382 4T366 1Q361 1 324 1T232 2Q170 2 138 2T102 1Q84 1 84 9Q84 14 87 24Q88 27 89 30T90 35T91 39T93 42T96 44T101 45T107 45T116 46T129 46Q168 47 180 50T198 63Q201 68 227 171L252 274L129 623Q128 624 127 625T125 627T122 629T118 631T113 633T105 634T96 635T83 636T66 637Z"/></g><g data-mml-node="mo" transform="translate(427,244) translate(-250 0)"><path data-c="AF" d="M69 544V590H430V544H69Z"/></g></g></g></g></g></svg></mjx-container>和每一帧的初始值的预处理方法</li>
+<li>提出了<strong>AttRes-CNN</strong>，用于重建第一帧</li>
+<li>提出了<strong>双向RNN网络</strong>用于重建其余帧</li>
+<li>结合MSE Loss和<strong>对抗性训练</strong></li>
+</ul>
+<p><img src="/image-20230403092204002.png" alt="image-20230403092204002" style="zoom: 60%;"></p>
+</li>
+</ul>
+<h2><span id="deep-unfolding">Deep unfolding</span><a href="#deep-unfolding" class="header-anchor">#</a></h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.10102">Degradation-Aware Unfolding Half-Shuffle Transformer for Spectral Compressive Imaging</a></p>
 </blockquote>
 <ul>
-<li>
-<p>首次阅读时间：2023.3.1</p>
-</li>
-<li>
-<p>创新点：</p>
+<li>首次阅读时间：2023.3.1</li>
+<li><p>创新点：</p>
 <ul>
-<li>
-<p><strong>第一个基于Transformer的深度展开方法-DAUHST</strong>（2022.5）</p>
-</li>
-<li>
-<p>提出<strong>DAUF</strong>，从压缩图像和物理掩码中估计参数，然后使用这些参数来控制每次迭代，开始从退化模型指导迭代</p>
-</li>
-<li>
-<p>提出<strong>Half-Shuffle Transformer (HST)</strong>，它可以同时捕获本地内容和远程依赖项，克服了CNN或local Transformer（捕获远程依赖有局限）以及global Transformer的缺陷（计算成本高）</p>
-<img src="image-20230302013526525.png" alt="image-20230302013526525" style="zoom:50%;">
+<li><strong>第一个基于Transformer的深度展开方法-DAUHST</strong>（2022.5）</li>
+<li>提出<strong>DAUF</strong>，从压缩图像和物理掩码中估计参数，然后使用这些参数来控制每次迭代，开始从退化模型指导迭代</li>
+<li><p>提出<strong>Half-Shuffle Transformer (HST)</strong>，它可以同时捕获本地内容和远程依赖项，克服了CNN或local Transformer（捕获远程依赖有局限）以及global Transformer的缺陷（计算成本高）</p>
+<p><img src="image-20230302013526525.png" alt="image-20230302013526525" style="zoom:50%;"></p>
 </li>
 </ul>
 </li>
 </ul>
-<h2 tabindex="-1"><span id="pnp">PnP</span><a href="#pnp" class="header-anchor">#</a></h2>
-<blockquote>
+<h2><span id="pnp">PnP</span><a href="#pnp" class="header-anchor">#</a></h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_CVPR_2020/html/Yuan_Plug-and-Play_Algorithms_for_Large-Scale_Snapshot_Compressive_Imaging_CVPR_2020_paper.html">Plug-and-Play Algorithms for Large-Scale Snapshot Compressive Imaging</a></p>
 </blockquote>
 <ul>
 <li>首次阅读时间：忘了……</li>
 <li>创新点：将深度去噪网络FFDNet集成到PnP-GAP中，具有较低计算量，并且首次表明 PnP 可以从二维快照测量中恢复 FHD 彩色视频（3840 × 1644 × 48，PNSR 高于 30dB）。</li>
 </ul>
-<h2 tabindex="-1"><span id="untrained-nn">Untrained NN</span><a href="#untrained-nn" class="header-anchor">#</a></h2>
 <blockquote>
+<p><a target="_blank" rel="noopener" href="https://opg.optica.org/prj/fulltext.cfm?uri=prj-9-2-B18&amp;id=446778">Deep plug-and-play priors for spectral snapshot compressive imaging</a></p>
+</blockquote>
+<ul>
+<li>首次阅读时间：忘了……</li>
+<li>创新点：<ul>
+<li>首次提出PnP方法重建高光谱图像</li>
+<li>考虑到光谱特性，重建每一帧时用与其相邻的帧进行重建，并且传入noise map调控去噪强度</li>
+</ul>
+</li>
+</ul>
+<h2><span id="untrained-nn">Untrained NN</span><a href="#untrained-nn" class="header-anchor">#</a></h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_cvpr_2018/html/Ulyanov_Deep_Image_Prior_CVPR_2018_paper.html">Deep Image Prior</a></p>
 </blockquote>
 <ul>
@@ -241,12 +241,9 @@ mjx-container[display="true"] + br {
 <p><a target="_blank" rel="noopener" href="https://opg.optica.org/ol/abstract.cfm?uri=ol-46-8-1888">Snapshot temporal compressive microscopy using an iterative algorithm with untrained neural networks</a></p>
 </blockquote>
 <ul>
-<li>
-<p>首次阅读时间：2023.2.12</p>
-</li>
-<li>
-<p>创新点：<strong>GAP-TV + deep image prior</strong>混合优化，用于视频SCI。也是首次将DIP用于SCI（2021年2月前没有将DIP用于SCI）。</p>
-<img src="image-20230302005859408.png" alt="image-20230302005859408" style="zoom: 50%;">
+<li>首次阅读时间：2023.2.12</li>
+<li><p>创新点：<strong>GAP-TV + deep image prior</strong>混合优化，用于视频SCI。也是首次将DIP用于SCI（2021年2月前没有将DIP用于SCI）。</p>
+<p><img src="image-20230302005859408.png" alt="image-20230302005859408" style="zoom: 50%;"></p>
 </li>
 </ul>
 <blockquote>
@@ -267,17 +264,12 @@ mjx-container[display="true"] + br {
 <p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/ICCV2021W/AIM/html/Liang_SwinIR_Image_Restoration_Using_Swin_Transformer_ICCVW_2021_paper.html">SwinIR: Image Restoration Using Swin Transformer</a></p>
 </blockquote>
 <ul>
-<li>
-<p>首次阅读时间：2023.2.28</p>
-</li>
-<li>
-<p>创新点：用<strong>Swin Transformer</strong>进行图像修复、超分辨等。流程：浅层信息提取+深层信息提取+重建</p>
-<img src="image-20230302011150365.png" alt="image-20230302011150365" style="zoom:50%;">
+<li>首次阅读时间：2023.2.28</li>
+<li><p>创新点：用<strong>Swin Transformer</strong>进行图像修复、超分辨等。流程：浅层信息提取+深层信息提取+重建</p>
+<p><img src="image-20230302011150365.png" alt="image-20230302011150365" style="zoom:50%;"></p>
 </li>
 </ul>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-03-01</span><a class="tag" href="/categories/论文阅读/" title="论文阅读">论文阅读 </a><a class="tag" href="/categories/论文阅读/快照压缩成像/" title="快照压缩成像">快照压缩成像 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/计算成像/" title="计算成像">计算成像 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/论文阅读/" title="论文阅读">论文阅读 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/快照压缩成像/" title="快照压缩成像">快照压缩成像 </a><span class="leancloud_visitors"></span><span>大约903个字, 3分钟0秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95%0Ahttp://hezj-opt.github.io/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F/%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/C/Cpp/Cpp98/Introduction%20to%20Programming%20with%20C++%20%E5%95%83%E4%B9%A6%E8%AE%B0%E5%BD%95/" title="《Introduction to Programming with C++》读书笔记">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%90%84%E5%BC%8F%E5%90%84%E6%A0%B7%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="李宏毅机器学习-各式各样的注意力机制">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>作者: 核子</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-03-01</span><a class="tag" href="/categories/论文阅读/" title="论文阅读">论文阅读 </a><a class="tag" href="/categories/论文阅读/快照压缩成像/" title="快照压缩成像">快照压缩成像 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/计算成像/" title="计算成像">计算成像 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/论文阅读/" title="论文阅读">论文阅读 </a><i class="fa fa-tag"></i><a class="tag" href="/tags/快照压缩成像/" title="快照压缩成像">快照压缩成像 </a><span class="leancloud_visitors"></span><span>大约1069个字, 3分钟33秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/intent/tweet?text=%E5%88%86%E4%BA%AB%E6%96%87%E7%AB%A0%EF%BC%9A%0A%0A%E6%A0%B8%E5%AD%90%E7%9A%84Blog%20%C2%B7%20%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95%0Ahttp://hezj-opt.github.io/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F/%E5%BF%AB%E7%85%A7%E5%8E%8B%E7%BC%A9%E6%88%90%E5%83%8F%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/%0A"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/C/Cpp/Cpp98/Introduction%20to%20Programming%20with%20C++%20%E5%95%83%E4%B9%A6%E8%AE%B0%E5%BD%95/" title="《Introduction to Programming with C++》读书笔记">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Deep-Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%90%84%E5%BC%8F%E5%90%84%E6%A0%B7%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="李宏毅机器学习-各式各样的注意力机制">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="gitalk_container" style="padding:10px"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>const gitalk = new Gitalk({
     clientID: '75fa8f8526b947111419',
     clientSecret: '28a1006aeebc5fe3d2e6d838846fa202d3362fd0',
     repo: 'comments',      // The repository of store comments,
